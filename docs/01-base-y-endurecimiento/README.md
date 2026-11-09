@@ -1,0 +1,19 @@
+# Fase 1: base y endurecimiento
+
+Convierte el portátil en un servidor con un acceso de rescate que no dependa del escritorio remoto, con la documentación en Git, el disco de datos preparado, actualizaciones de seguridad, firewall y Docker.
+
+| Paso | Guía | Estado |
+|---|---|---|
+| 1. Reservas DHCP del servidor y del PC | [`01-reservas-dhcp.md`](01-reservas-dhcp.md) | Hecho |
+| 2. SSH de emergencia: clave, TOTP y Fail2ban | [`02-ssh-de-emergencia.md`](02-ssh-de-emergencia.md) | Hecho |
+| 3. Repositorio, gitleaks y GitHub | [`03-repositorio.md`](03-repositorio.md) | Hecho |
+| 4. Portátil como servidor (tapa, suspensión, batería) | — | Pendiente |
+| 5. Disco de datos (btrfs) | — | Pendiente |
+| 6. Actualizaciones de seguridad | — | Pendiente |
+| 7. Firewall (UFW) y filtro de salida del agente | — | Pendiente |
+| 8. Docker | — | Pendiente |
+| 9. Resto de la base y Lynis | — | Pendiente |
+
+**Orden:** el SSH va antes que cualquier otro cambio que pueda cortar el acceso. A partir del paso 2, los pasos que puedan cortar el escritorio remoto se lanzan **por SSH desde el PC, dentro de tmux**. Las reservas DHCP se adelantaron al SSH porque la IP del servidor podía cambiar cada 12 horas y Fail2ban necesita una IP fija del PC de rescate.
+
+**Salida de la fase:** reinicio con la tapa cerrada; el equipo vuelve solo, con el disco montado, SSH accesible solo con clave y TOTP, y Moonlight funcionando con la tapa abierta. Moonlight con la tapa cerrada se resuelve en la Fase 2.
