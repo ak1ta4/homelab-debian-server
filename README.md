@@ -28,10 +28,27 @@ Ver [`docs/PROGRESO.md`](docs/PROGRESO.md).
 ## Cómo leerlo
 
 1. [`docs/glosario.md`](docs/glosario.md): términos y marcadores como `<IP_SERVIDOR>`.
-2. `docs/00-conceptos.md` y las guías por fase (`docs/01-…` a `docs/08-…`), en orden.
-3. `docs/decisiones/`: un ADR por decisión, con las alternativas descartadas.
-4. `stacks/<servicio>/`: `compose.yaml`, `.env.example` y su README.
-5. `scripts/`: scripts comentados, cada uno con su equivalente manual en la guía.
+2. [`docs/00-conceptos.md`](docs/00-conceptos.md): las ideas básicas, explicadas desde cero.
+3. Las guías, en orden:
+   - [Fase 0: auditoría](docs/00-auditoria.md)
+   - [Fase 1: base y endurecimiento](docs/01-base-y-endurecimiento/README.md)
+   - Las siguientes fases, `docs/02-…` a `docs/08-…`, a medida que se hagan.
+4. [`docs/decisiones/`](docs/decisiones/README.md): un ADR por decisión, con las alternativas descartadas.
+5. [`docs/guia-securizacion.md`](docs/guia-securizacion.md): qué se aplicó, adaptó o descartó de la guía de referencia.
+6. [`docs/lecciones-aprendidas.md`](docs/lecciones-aprendidas.md) y [`docs/entrevista.md`](docs/entrevista.md).
+7. `stacks/<servicio>/`: `compose.yaml`, `.env.example` y su README.
+8. `scripts/`: scripts comentados, cada uno con su equivalente manual en la guía.
+
+Cada guía tiene las mismas secciones:
+1. Qué y por qué.
+2. Conceptos.
+3. Requisitos.
+4. Pasos con cada comando explicado.
+5. Verificación.
+6. Errores frecuentes.
+7. Cómo revertirlo.
+8. Seguridad.
+9. Para la entrevista.
 
 ## Seguridad del repositorio
 

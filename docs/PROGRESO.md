@@ -4,19 +4,25 @@ Registro para retomar el trabajo en una sesión nueva. Fechas en formato AAAA-MM
 
 ## Fase 0: auditoría (terminada)
 
+Guía: [`00-auditoria.md`](00-auditoria.md).
+
 - Auditoría de solo lectura del sistema, discos, gráficos, red y exposición.
-- Decisiones: sin cifrado de disco (riesgo físico aceptado por el dueño), sin sandbox de Claude Code y usuario limitado para el agente desde antes de la Fase 1.
+- Decisiones:
+  - Sin cifrado de disco: riesgo físico aceptado por el dueño ([ADR 0001](decisiones/0001-sin-cifrado-de-disco.md)).
+  - Agente de IA en una cuenta sin privilegios desde antes de la Fase 1, sin sandbox por ahora ([ADR 0002](decisiones/0002-permisos-del-agente-de-ia.md)).
 - Revisión del router (2026-11-02 y 2026-11-08):
   - Sin CGNAT. DMZ, reenvíos y UPnP desactivados.
-  - El SSH propio del router respondía desde internet y su panel no permite cerrarlo. Se tapó con una regla de reenvío del TCP 22 hacia `<IP_SUMIDERO>`. Es una excepción documentada a "sin reenvíos". Comprobado desde datos móviles.
+  - El SSH propio del router respondía desde internet y su panel no permite cerrarlo. Se tapó con un reenvío del TCP 22 hacia `<IP_SUMIDERO>` ([ADR 0004](decisiones/0004-tapar-ssh-del-router.md)). Comprobado desde datos móviles.
 
 ## Fase 1: base y endurecimiento (en curso)
+
+Guía: [`01-base-y-endurecimiento/`](01-base-y-endurecimiento/README.md).
 
 | Paso | Estado |
 |---|---|
 | 1. Reservas DHCP del servidor y del PC | Hecho (2026-11-08). Se verifica en el próximo reinicio |
 | 2. SSH de emergencia | Hecho (2026-11-08) |
-| 3. Repositorio y documentación | En curso |
+| 3. Repositorio y documentación | Hecho (2026-11-09) |
 | 4. Portátil como servidor | Pendiente |
 | 5. Disco de datos | Pendiente |
 | 6. Actualizaciones de seguridad | Pendiente |
@@ -26,10 +32,10 @@ Registro para retomar el trabajo en una sesión nueva. Fechas en formato AAAA-MM
 
 ### Paso 2: SSH de emergencia
 
-- OpenSSH 10.0 de Debian 13. Configuración propia en `/etc/ssh/sshd_config.d/10-homelab.conf`: solo el grupo `sshusers`, sin root, `AuthenticationMethods publickey,keyboard-interactive` y sin reenvíos.
+- OpenSSH 10.0 de Debian 13 con configuración propia en `/etc/ssh/sshd_config.d/10-homelab.conf`: solo el grupo `sshusers`, sin root, `AuthenticationMethods publickey,keyboard-interactive` y sin reenvíos.
 - TOTP con `libpam-google-authenticator`. `/etc/pam.d/sshd` no incluye `common-auth`, así que nunca pide la contraseña de Unix.
 - Fail2ban 1.1.0, solo para `sshd`: 5 fallos en 10 min → 1 h, excluye `<IP_PC>`.
-- Comprobado:
+- **Comprobado:**
   - Entra con clave + código.
   - Se rechazan la contraseña, root, el código incorrecto y la conexión sin clave.
   - Un código de emergencia sirve.
@@ -38,10 +44,16 @@ Registro para retomar el trabajo en una sesión nueva. Fechas en formato AAAA-MM
 ### Paso 3: repositorio
 
 - `git` de Debian y gitleaks 8.30.1 (binario oficial verificado con su checksum).
-- Hooks `pre-commit`, `pre-applypatch` y `pre-push` en el servidor, con una configuración de gitleaks propiedad de root, fuera del repositorio. Ignoran `gitleaks:allow`.
-- Comprobado: un token falso bloquea el commit.
-- El agente trabaja en su clon y entrega parches; `<USUARIO_ADMIN>` los revisa, los aplica con `git am` y los sube con una clave de despliegue protegida con frase de paso.
+- Hooks `pre-commit`, `pre-applypatch` y `pre-push` con una configuración de gitleaks propiedad de root, fuera del repositorio. Ignoran `gitleaks:allow`. **Comprobado:** un token falso bloquea el commit.
+- El agente entrega parches; `<USUARIO_ADMIN>` los revisa, los aplica con `git am` y los sube con una clave de despliegue con frase de paso.
+- Workflow de gitleaks en GitHub propio, en verde. Sustituye a `gitleaks-action`, que no revisaba nada en la primera subida ([lecciones](lecciones-aprendidas.md#gitleaks-action-y-la-primera-subida)).
+- Guías de la Fase 0, de los pasos 1 a 3, cinco ADR, la tabla de la guía de securización, lecciones aprendidas y preguntas de entrevista.
+
+## Pendiente de verificar
+
+- Las reservas DHCP, en el próximo reinicio de cada equipo.
+- Que la regla del router que tapa su SSH sigue en su sitio: en el calendario periódico.
 
 ## Próximo
 
-Primera subida, guías de la Fase 0 y del SSH, y paso 4.
+Paso 4, portátil como servidor: tapa, suspensión, arranque tras un corte de luz y batería. Puede cortar el escritorio remoto: se hará por SSH, dentro de tmux.

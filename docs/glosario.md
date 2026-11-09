@@ -14,7 +14,13 @@ Las guías nunca muestran valores reales. Usan estos marcadores; los valores de 
 | `<IP_PUBLICA>` | IP pública de la conexión |
 | `<USUARIO_ADMIN>` | Cuenta administradora del servidor, la única en `sshusers` por ahora |
 | `<USUARIO_GITHUB>` | Usuario de GitHub dueño del repositorio |
+| `<USUARIO_WINDOWS>` | Usuario de Windows en el PC |
+| `<IP_BLOQUEADA>` | IP que Fail2ban ha bloqueado, tal como sale en `fail2ban-client status sshd` |
 | `<DOMINIO>` | Dominio propio (Fase 4) |
+| `<RED_LAN_REGEX>`, `<IP_PUBLICA_REGEX>`, `<OTROS_NOMBRES>` | Valores reales escritos como expresión regular, solo en la configuración local de gitleaks |
+| `AAAAMMDD` | Fecha del día en las copias de seguridad, por ejemplo `20261108` |
+
+Los marcadores se escriben con los `< >` y se sustituyen enteros, sin dejar los símbolos.
 
 ## Términos
 
