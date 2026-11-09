@@ -1,0 +1,23 @@
+# Secretos y variables reales: nunca en Git. Cada stack lleva su .env.example.
+.env
+*.env
+!*.env.example
+secrets/
+
+# Claves y certificados
+*.key
+*.pem
+*.p12
+*.pfx
+id_*
+!id_*.pub
+
+# Inventarios y salidas sin sanear
+inventario*
+*.local.md
+*.log
+
+# Editor y sistema
+*.swp
+*~
+.DS_Store
