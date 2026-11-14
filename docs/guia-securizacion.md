@@ -19,7 +19,7 @@ Referencia: [How To Secure A Linux Server](https://github.com/imthenachoman/How-
 | NTP Client | Adaptada | `systemd-timesyncd` (Debian 13), activo y sincronizado. Se valorará chrony con NTS (hora autenticada) en el paso 9 |
 | Securing /proc (`hidepid`) | Descartada | El autor avisa de que puede romper sistemas con systemd; aquí arriesga GNOME y el escritorio remoto |
 | Force Accounts To Use Secure Passwords | Pendiente (paso 9) | — |
-| Automatic Security Updates and Alerts | Pendiente (paso 6) | `unattended-upgrades` solo de seguridad y sin reinicio automático |
+| Automatic Security Updates and Alerts | Adaptada (paso 6) | `unattended-upgrades` con los orígenes por defecto de Debian: seguridad y versiones de la estable. Reinicio automático sobre las 6:00 solo si hace falta ([ADR 0006](decisiones/0006-reinicio-e-inicio-de-sesion-automaticos.md)). **Pendiente** (Fase 5): los avisos por correo |
 | More Secure Random Entropy Pool (WIP) | Evaluar (paso 9) | Comprobar si aporta algo con el núcleo 6.12 antes de instalar nada |
 | Add Panic/Secondary/Fake password | Descartada | Su ejemplo es destructivo (borra carpetas personales) y toca la autenticación del sistema |
 | Firewall With UFW | Pendiente (paso 7) | Entrada denegada por defecto, por interfaz, con rollback automático al activarlo |

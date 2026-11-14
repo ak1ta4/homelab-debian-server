@@ -9,6 +9,7 @@ Cada decisión importante tiene un documento corto con su **contexto**, las **op
 | [0003](0003-ssh-clave-totp-fail2ban.md) | SSH de emergencia con clave + TOTP y Fail2ban, sin cambiar el puerto | Aceptada |
 | [0004](0004-tapar-ssh-del-router.md) | Tapar el SSH del router con un reenvío a una IP sin uso | Aceptada |
 | [0005](0005-gitleaks-local-y-en-github.md) | gitleaks con configuración de root fuera del repositorio y workflow propio | Aceptada |
+| [0006](0006-reinicio-e-inicio-de-sesion-automaticos.md) | Reinicio automático tras actualizar e inicio de sesión automático con bloqueo | Aceptada |
 
 **Pendientes, en su fase:**
 - Syncthing frente a Nextcloud.
