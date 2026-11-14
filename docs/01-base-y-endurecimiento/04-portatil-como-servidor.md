@@ -143,7 +143,7 @@ Cualquier cambio en la BIOS necesita confirmación expresa.
 
 - [x] logind responde `no` a suspender, hibernar, suspensión híbrida y suspender-y-hibernar.
 - [x] logind ignora la tapa en los tres casos, sin haberse reiniciado.
-- [ ] UPower: `critical-action: PowerOff` con los umbrales 25/15/10.
+- [x] UPower: `critical-action: PowerOff` con los umbrales 25/15/10, y `diff` con la copia: solo esas cuatro líneas.
 - [ ] Tapa cerrada 30 minutos con cargador: SSH vivo, `uptime` sigue, el registro de logind dice "Lid closed" sin suspender, y temperaturas anotadas antes y después.
 - [ ] Cargador desenchufado 10 minutos: sigue encendido y `upower -d` muestra `on-battery: yes`.
 - [ ] Reinicio con la tapa cerrada: vuelve solo, con su IP reservada, y SSH con clave + TOTP.

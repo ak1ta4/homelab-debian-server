@@ -54,8 +54,8 @@ Guía: [`01-base-y-endurecimiento/`](01-base-y-endurecimiento/README.md).
 - Hecho y comprobado por D-Bus, sin suspender:
   - Suspensión e hibernación desactivadas (`sleep.conf.d/10-homelab.conf`).
   - La tapa no hace nada (`logind.conf.d/10-homelab.conf`), aplicado con `reload`.
+  - UPower: `PowerOff` al 10 % (umbrales 25/15/10). No admite archivos parciales: se editó `UPower.conf` con copia `.bak-20261114`.
 - Pendiente:
-  - UPower: `PowerOff` al 10 %. No admite archivos parciales: se edita `UPower.conf` con copia.
   - BIOS: límite de carga y encendido tras un corte.
   - Pruebas físicas aplazadas por el dueño: tapa cerrada, cargador desenchufado y reinicio con la tapa cerrada (incluye Moonlight).
 
@@ -66,4 +66,4 @@ Guía: [`01-base-y-endurecimiento/`](01-base-y-endurecimiento/README.md).
 
 ## Próximo
 
-Terminar el paso 4: aplicar UPower (`~/paso-4-3-upower.sh` del agente, ejecutado con `sudo bash`), revisar la BIOS y hacer las pruebas físicas.
+Terminar el paso 4: revisar la BIOS y hacer las pruebas físicas.
