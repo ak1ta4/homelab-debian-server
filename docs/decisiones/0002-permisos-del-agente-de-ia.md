@@ -27,7 +27,7 @@ Claude Code administra el homelab junto al dueño. Empezó ejecutándose como **
 
 - **Queda limitado por el sistema:** la carpeta del dueño, `sudo`, Docker y las sesiones del dueño.
 - **Sigue siendo posible:**
-  - **Red de salida abierta:** el agente puede conectarse a internet y a la LAN, incluidos el panel del router y el de Sunshine, aunque sin sus credenciales, y enviar fuera lo que pueda leer. Riesgo aceptado hasta decidir el filtro de salida (Fase 1, paso 7).
+  - **Red de salida abierta:** el agente puede conectarse a internet y a la LAN, incluidos el panel del router y el de Sunshine, aunque sin sus credenciales, y enviar fuera lo que pueda leer. Riesgo aceptado hasta decidir el filtro de salida (Fase 1, paso 7). **Actualización (2026-11-14):** limitado por la [ADR 0007](0007-filtro-de-salida-del-agente.md): sin LAN ni servicios locales, y a internet solo DNS y HTTPS.
   - **Lectura** de todo lo que sea legible para cualquier cuenta.
   - **Cuenta de Anthropic compartida** con el dueño, con Remote Control activo. Se revisa en la Fase 7.
   - **Fallos del núcleo:** una vulnerabilidad local permitiría escalar privilegios.

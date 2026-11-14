@@ -22,7 +22,7 @@ Referencia: [How To Secure A Linux Server](https://github.com/imthenachoman/How-
 | Automatic Security Updates and Alerts | Adaptada (paso 6) | `unattended-upgrades` con los orígenes por defecto de Debian: seguridad y versiones de la estable. Reinicio automático sobre las 6:00 solo si hace falta ([ADR 0006](decisiones/0006-reinicio-e-inicio-de-sesion-automaticos.md)). **Pendiente** (Fase 5): los avisos por correo |
 | More Secure Random Entropy Pool (WIP) | Evaluar (paso 9) | Comprobar si aporta algo con el núcleo 6.12 antes de instalar nada |
 | Add Panic/Secondary/Fake password | Descartada | Su ejemplo es destructivo (borra carpetas personales) y toca la autenticación del sistema |
-| Firewall With UFW | Pendiente (paso 7) | Entrada denegada por defecto, por interfaz, con rollback automático al activarlo |
+| Firewall With UFW | Adaptada (paso 7) | Entrada denegada por defecto; SSH, Sunshine y mDNS solo desde `<RED_LAN>`, sin limitar por interfaz. Activado con desactivación automática a los 5 minutos. Salida abierta para el sistema y filtrada para el agente con una tabla nftables propia ([ADR 0007](decisiones/0007-filtro-de-salida-del-agente.md)) |
 | Docker And UFW | Pendiente (pasos 7 y 8) | Docker se salta UFW en los puertos publicados: nada se publica en `0.0.0.0` y se audita con `nft` y desde otro equipo |
 | PSAD | Descartada | Solapa a Fail2ban y aporta poco sin exposición a internet |
 | **Fail2Ban** | Adaptada | Solo `sshd`, leyendo el journal (Debian 13 no tiene `auth.log`), con nftables y excluyendo el PC de rescate |
