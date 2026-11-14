@@ -10,7 +10,7 @@ Convierte el portátil en un servidor con un acceso de rescate que no dependa de
 | 4. Portátil como servidor (tapa, suspensión, batería) | [`04-portatil-como-servidor.md`](04-portatil-como-servidor.md) | En curso |
 | 5. Disco de datos (btrfs) | [`05-disco-de-datos.md`](05-disco-de-datos.md) | Hecho. Falta la prueba de arranque |
 | 6. Actualizaciones de seguridad | [`06-actualizaciones-de-seguridad.md`](06-actualizaciones-de-seguridad.md) | Hecho. Falta la prueba de reinicio |
-| 7. Firewall (UFW) y filtro de salida del agente | — | Pendiente |
+| 7. Firewall (UFW) y filtro de salida del agente | [`07-firewall.md`](07-firewall.md) | Hecho. Falta la prueba de reinicio |
 | 8. Docker | — | Pendiente |
 | 9. Resto de la base y Lynis | — | Pendiente |
 

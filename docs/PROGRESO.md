@@ -26,7 +26,7 @@ Guía: [`01-base-y-endurecimiento/`](01-base-y-endurecimiento/README.md).
 | 4. Portátil como servidor | En curso (2026-11-14) |
 | 5. Disco de datos | Hecho (2026-11-14). Falta la prueba de arranque |
 | 6. Actualizaciones de seguridad | Hecho (2026-11-14). Falta la prueba de reinicio |
-| 7. Firewall | Pendiente |
+| 7. Firewall | Hecho (2026-11-14). Falta la prueba de reinicio |
 | 8. Docker | Pendiente |
 | 9. Resto de la base | Pendiente |
 
@@ -84,6 +84,16 @@ Guía: [`01-base-y-endurecimiento/`](01-base-y-endurecimiento/README.md).
   - Primera ejecución real (registro en `/var/log/unattended-upgrades/`).
   - En el primer reinicio: que entre solo, que bloquee la pantalla y que Moonlight funcione.
 
+### Paso 7: firewall
+
+- UFW 0.36.2: entrada denegada por defecto; SSH, Sunshine (con su panel) y mDNS solo desde `<RED_LAN>`. Activado con desactivación automática a los 5 minutos.
+- Filtro de salida del agente ([ADR 0007](decisiones/0007-filtro-de-salida-del-agente.md)): tabla nftables `inet agente_salida` con `homelab-agente-salida.service`. Sin LAN ni servicios locales; a internet solo DNS y HTTPS.
+- **Comprobado:**
+  - Con UFW activo, SSH nuevo y Moonlight funcionan.
+  - El agente resuelve DNS y llega a Anthropic y Debian por HTTPS.
+  - El router, el panel de Sunshine, el SSH local y el puerto 80 se rechazan.
+- Pendiente: comprobar tras un reinicio que los dos siguen activos.
+
 ## Pendiente de verificar
 
 - Las reservas DHCP, en el próximo reinicio de cada equipo.
@@ -96,4 +106,4 @@ Guía: [`01-base-y-endurecimiento/`](01-base-y-endurecimiento/README.md).
   - BIOS: límite de carga y encendido tras un corte.
   - Pruebas físicas del paso 4.
   - Arranque con el disco de datos conectado y desconectado.
-- Mientras tanto: paso 7, firewall y filtro de salida del agente.
+- Mientras tanto: paso 8, Docker.

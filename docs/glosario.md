@@ -17,6 +17,7 @@ Las guías nunca muestran valores reales. Usan estos marcadores; los valores de 
 | `<USUARIO_WINDOWS>` | Usuario de Windows en el PC |
 | `<IP_BLOQUEADA>` | IP que Fail2ban ha bloqueado, tal como sale en `fail2ban-client status sshd` |
 | `<ID_DISCO_DATOS>` | Nombre del disco de datos en `/dev/disk/by-id/`. Incluye el número de serie |
+| `<RANGO_PRIVADO_16>` | El rango privado `/16` de la RFC 1918 (el de los routers domésticos), entero. No identifica la casa, pero la regla de gitleaks que protege la IP de la LAN bloquea cualquier dirección de ese rango |
 | `<UUID_DATOS>` | UUID del sistema de archivos btrfs del disco de datos (`lsblk -o NAME,UUID`) |
 | `<DOMINIO>` | Dominio propio (Fase 4) |
 | `<RED_LAN_REGEX>`, `<IP_PUBLICA_REGEX>`, `<OTROS_NOMBRES>` | Valores reales escritos como expresión regular, solo en la configuración local de gitleaks |
