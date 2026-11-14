@@ -7,7 +7,7 @@ Convierte el portátil en un servidor con un acceso de rescate que no dependa de
 | 1. Reservas DHCP del servidor y del PC | [`01-reservas-dhcp.md`](01-reservas-dhcp.md) | Hecho |
 | 2. SSH de emergencia: clave, TOTP y Fail2ban | [`02-ssh-de-emergencia.md`](02-ssh-de-emergencia.md) | Hecho |
 | 3. Repositorio, gitleaks y GitHub | [`03-repositorio.md`](03-repositorio.md) | Hecho |
-| 4. Portátil como servidor (tapa, suspensión, batería) | — | Pendiente |
+| 4. Portátil como servidor (tapa, suspensión, batería) | [`04-portatil-como-servidor.md`](04-portatil-como-servidor.md) | En curso |
 | 5. Disco de datos (btrfs) | — | Pendiente |
 | 6. Actualizaciones de seguridad | — | Pendiente |
 | 7. Firewall (UFW) y filtro de salida del agente | — | Pendiente |

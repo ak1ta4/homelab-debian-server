@@ -23,7 +23,7 @@ Guía: [`01-base-y-endurecimiento/`](01-base-y-endurecimiento/README.md).
 | 1. Reservas DHCP del servidor y del PC | Hecho (2026-11-08). Se verifica en el próximo reinicio |
 | 2. SSH de emergencia | Hecho (2026-11-08) |
 | 3. Repositorio y documentación | Hecho (2026-11-09) |
-| 4. Portátil como servidor | Pendiente |
+| 4. Portátil como servidor | En curso (2026-11-14) |
 | 5. Disco de datos | Pendiente |
 | 6. Actualizaciones de seguridad | Pendiente |
 | 7. Firewall | Pendiente |
@@ -49,6 +49,16 @@ Guía: [`01-base-y-endurecimiento/`](01-base-y-endurecimiento/README.md).
 - Workflow de gitleaks en GitHub propio, en verde. Sustituye a `gitleaks-action`, que no revisaba nada en la primera subida ([lecciones](lecciones-aprendidas.md#gitleaks-action-y-la-primera-subida)).
 - Guías de la Fase 0, de los pasos 1 a 3, cinco ADR, la tabla de la guía de securización, lecciones aprendidas y preguntas de entrevista.
 
+### Paso 4: portátil como servidor
+
+- Hecho y comprobado por D-Bus, sin suspender:
+  - Suspensión e hibernación desactivadas (`sleep.conf.d/10-homelab.conf`).
+  - La tapa no hace nada (`logind.conf.d/10-homelab.conf`), aplicado con `reload`.
+- Pendiente:
+  - UPower: `PowerOff` al 10 %. No admite archivos parciales: se edita `UPower.conf` con copia.
+  - BIOS: límite de carga y encendido tras un corte.
+  - Pruebas físicas aplazadas por el dueño: tapa cerrada, cargador desenchufado y reinicio con la tapa cerrada (incluye Moonlight).
+
 ## Pendiente de verificar
 
 - Las reservas DHCP, en el próximo reinicio de cada equipo.
@@ -56,4 +66,4 @@ Guía: [`01-base-y-endurecimiento/`](01-base-y-endurecimiento/README.md).
 
 ## Próximo
 
-Paso 4, portátil como servidor: tapa, suspensión, arranque tras un corte de luz y batería. Puede cortar el escritorio remoto: se hará por SSH, dentro de tmux.
+Terminar el paso 4: aplicar UPower (`~/paso-4-3-upower.sh` del agente, ejecutado con `sudo bash`), revisar la BIOS y hacer las pruebas físicas.
