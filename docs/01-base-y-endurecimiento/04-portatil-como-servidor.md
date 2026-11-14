@@ -133,6 +133,11 @@ upower -d | grep critical-action
 
 ### 4.4 BIOS: límite de carga y encendido tras un corte (pendiente)
 
+**Desde Linux no se puede limitar la carga en este modelo.** Comprobado sin `sudo`:
+- El núcleo no ofrece `charge_control_end_threshold` en `/sys/class/power_supply/BAT0/`.
+- El controlador `hp-bioscfg` está cargado, pero esta BIOS solo le expone `Sure_Start` y una entrada vacía (`ls /sys/class/firmware-attributes/hp-bioscfg/attributes/`). Está pensado para los modelos de empresa de HP.
+- Las herramientas de batería de HP solo existen para Windows.
+
 En persona: reiniciar y pulsar `F10` en el logotipo de HP. **Solo mirar**, y anotar si hay:
 - Un límite de carga ("Adaptive Battery Optimizer", "Battery Care" o similar). Con el cargador siempre puesto, la batería al 100 % se desgasta antes.
 - Encender al conectar el cargador, o Wake-on-LAN con el equipo apagado.
