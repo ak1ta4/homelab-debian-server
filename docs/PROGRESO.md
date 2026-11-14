@@ -24,7 +24,7 @@ Guía: [`01-base-y-endurecimiento/`](01-base-y-endurecimiento/README.md).
 | 2. SSH de emergencia | Hecho (2026-11-08) |
 | 3. Repositorio y documentación | Hecho (2026-11-09) |
 | 4. Portátil como servidor | En curso (2026-11-14) |
-| 5. Disco de datos | Pendiente |
+| 5. Disco de datos | Hecho (2026-11-14). Falta la prueba de arranque |
 | 6. Actualizaciones de seguridad | Pendiente |
 | 7. Firewall | Pendiente |
 | 8. Docker | Pendiente |
@@ -59,11 +59,28 @@ Guía: [`01-base-y-endurecimiento/`](01-base-y-endurecimiento/README.md).
   - BIOS: límite de carga y encendido tras un corte.
   - Pruebas físicas aplazadas por el dueño: tapa cerrada, cargador desenchufado y reinicio con la tapa cerrada (incluye Moonlight).
 
+### Paso 5: disco de datos
+
+- SSD de 2 TB por USB con btrfs (btrfs-progs 6.14): datos `single`, metadatos `DUP`, etiqueta `datos`.
+- Subvolúmenes `archivos`, `fotos` y `snapshots`. Se monta la raíz en `/srv/datos` desde `fstab` por UUID, con `noatime,compress=zstd:1,nofail`. Copia en `/etc/fstab.bak-20261114`.
+- **Comprobado:**
+  - `findmnt --verify` sin errores.
+  - Montado con TRIM asíncrono.
+  - El arranque no espera por él (`nofail`).
+  - Escritura y lectura correctas, y `device stats` a 0.
+  - El USB, estable en el registro del núcleo.
+- Pendiente, en la sesión en persona: arrancar con el disco conectado y desconectado. El programa de snapshots y los permisos, cuando lleguen los servicios.
+
 ## Pendiente de verificar
 
 - Las reservas DHCP, en el próximo reinicio de cada equipo.
 - Que la regla del router que tapa su SSH sigue en su sitio: en el calendario periódico.
+- Aviso del núcleo en `nvidia-drm` (550.163.01) el 2026-11-14 a las 20:16: `WARNING` en `nv_drm_revoke_modeset_permission`, dos veces seguidas, sin caída. Sin tocar drivers. Si se repite o coincide con cortes de Moonlight, se investiga en la Fase 2.
 
 ## Próximo
 
-Terminar el paso 4: revisar la BIOS y hacer las pruebas físicas.
+- Sesión en persona:
+  - BIOS: límite de carga y encendido tras un corte.
+  - Pruebas físicas del paso 4.
+  - Arranque con el disco de datos conectado y desconectado.
+- Mientras tanto: paso 6, actualizaciones de seguridad.
