@@ -11,7 +11,7 @@ Convierte el portátil en un servidor con un acceso de rescate que no dependa de
 | 5. Disco de datos (btrfs) | [`05-disco-de-datos.md`](05-disco-de-datos.md) | Hecho. Falta la prueba de arranque |
 | 6. Actualizaciones de seguridad | [`06-actualizaciones-de-seguridad.md`](06-actualizaciones-de-seguridad.md) | Hecho. Falta la prueba de reinicio |
 | 7. Firewall (UFW) y filtro de salida del agente | [`07-firewall.md`](07-firewall.md) | Hecho. Falta la prueba de reinicio |
-| 8. Docker | — | Pendiente |
+| 8. Docker | [`08-docker.md`](08-docker.md) | Hecho. Falta la prueba de reinicio |
 | 9. Resto de la base y Lynis | — | Pendiente |
 
 **Orden:** el SSH va antes que cualquier otro cambio que pueda cortar el acceso. A partir del paso 2, los pasos que puedan cortar el escritorio remoto se lanzan **por SSH desde el PC, dentro de tmux**. Las reservas DHCP se adelantaron al SSH porque la IP del servidor podía cambiar cada 12 horas y Fail2ban necesita una IP fija del PC de rescate.

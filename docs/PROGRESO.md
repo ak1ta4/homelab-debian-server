@@ -27,7 +27,7 @@ Guía: [`01-base-y-endurecimiento/`](01-base-y-endurecimiento/README.md).
 | 5. Disco de datos | Hecho (2026-11-14). Falta la prueba de arranque |
 | 6. Actualizaciones de seguridad | Hecho (2026-11-14). Falta la prueba de reinicio |
 | 7. Firewall | Hecho (2026-11-14). Falta la prueba de reinicio |
-| 8. Docker | Pendiente |
+| 8. Docker | Hecho (2026-11-15). Falta la prueba de reinicio |
 | 9. Resto de la base | Pendiente |
 
 ### Paso 2: SSH de emergencia
@@ -94,6 +94,14 @@ Guía: [`01-base-y-endurecimiento/`](01-base-y-endurecimiento/README.md).
   - El router, el panel de Sunshine, el SSH local y el puerto 80 se rechazan.
 - Pendiente: comprobar tras un reinicio que los dos siguen activos.
 
+### Paso 8: Docker
+
+- Docker Engine 29.9.3 y Compose 5.7.1 desde el repositorio oficial. La clave se comprobó con una segunda descarga por otro camino.
+- `daemon.json`: `local`, `live-restore` y `"ip": "127.0.0.1"` ([ADR 0008](decisiones/0008-docker-y-ufw.md)). Siempre con `sudo`, con el grupo `docker` vacío. Entra en las actualizaciones automáticas.
+- **Comprobado:**
+  - Un puerto publicado sin IP escucha solo en `127.0.0.1`.
+  - El filtro de salida del agente sigue funcionando con Docker activo.
+
 ## Pendiente de verificar
 
 - Las reservas DHCP, en el próximo reinicio de cada equipo.
@@ -106,4 +114,4 @@ Guía: [`01-base-y-endurecimiento/`](01-base-y-endurecimiento/README.md).
   - BIOS: límite de carga y encendido tras un corte.
   - Pruebas físicas del paso 4.
   - Arranque con el disco de datos conectado y desconectado.
-- Mientras tanto: paso 8, Docker.
+- Mientras tanto: paso 9, el resto de la base y Lynis.
