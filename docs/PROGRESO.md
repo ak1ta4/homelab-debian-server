@@ -25,7 +25,7 @@ Guía: [`01-base-y-endurecimiento/`](01-base-y-endurecimiento/README.md).
 | 3. Repositorio y documentación | Hecho (2026-11-09) |
 | 4. Portátil como servidor | En curso (2026-11-14) |
 | 5. Disco de datos | Hecho (2026-11-14). Falta la prueba de arranque |
-| 6. Actualizaciones de seguridad | Pendiente |
+| 6. Actualizaciones de seguridad | Hecho (2026-11-14). Falta la prueba de reinicio |
 | 7. Firewall | Pendiente |
 | 8. Docker | Pendiente |
 | 9. Resto de la base | Pendiente |
@@ -71,6 +71,19 @@ Guía: [`01-base-y-endurecimiento/`](01-base-y-endurecimiento/README.md).
   - El USB, estable en el registro del núcleo.
 - Pendiente, en la sesión en persona: arrancar con el disco conectado y desconectado. El programa de snapshots y los permisos, cuando lleguen los servicios.
 
+### Paso 6: actualizaciones de seguridad
+
+- `unattended-upgrades` 2.12 con los orígenes por defecto de Debian. Reinicio automático entre las 6:00 y las 7:00, solo si hace falta ([ADR 0006](decisiones/0006-reinicio-e-inicio-de-sesion-automaticos.md)).
+- GNOME Software sin descargas automáticas.
+- Inicio de sesión automático en GDM con bloqueo de pantalla a los 3 segundos. Copia en `/etc/gdm3/daemon.conf.bak-20261114`.
+- **Comprobado:**
+  - La prueba en seco acepta solo los orígenes de Debian.
+  - El temporizador está programado.
+  - `loginctl lock-session` bloquea la sesión.
+- Pendiente:
+  - Primera ejecución real (registro en `/var/log/unattended-upgrades/`).
+  - En el primer reinicio: que entre solo, que bloquee la pantalla y que Moonlight funcione.
+
 ## Pendiente de verificar
 
 - Las reservas DHCP, en el próximo reinicio de cada equipo.
@@ -83,4 +96,4 @@ Guía: [`01-base-y-endurecimiento/`](01-base-y-endurecimiento/README.md).
   - BIOS: límite de carga y encendido tras un corte.
   - Pruebas físicas del paso 4.
   - Arranque con el disco de datos conectado y desconectado.
-- Mientras tanto: paso 6, actualizaciones de seguridad.
+- Mientras tanto: paso 7, firewall y filtro de salida del agente.
