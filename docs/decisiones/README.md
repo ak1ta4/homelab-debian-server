@@ -11,6 +11,7 @@ Cada decisión importante tiene un documento corto con su **contexto**, las **op
 | [0005](0005-gitleaks-local-y-en-github.md) | gitleaks con configuración de root fuera del repositorio y workflow propio | Aceptada |
 | [0006](0006-reinicio-e-inicio-de-sesion-automaticos.md) | Reinicio automático tras actualizar e inicio de sesión automático con bloqueo | Aceptada |
 | [0007](0007-filtro-de-salida-del-agente.md) | Filtro de salida del agente: sin LAN ni servicios locales, solo DNS y HTTPS | Aceptada |
+| [0008](0008-docker-y-ufw.md) | Docker publica por defecto solo en el propio equipo; lo de la LAN, a propósito | Aceptada |
 
 **Pendientes, en su fase:**
 - Syncthing frente a Nextcloud.
@@ -20,7 +21,6 @@ Cada decisión importante tiene un documento corto con su **contexto**, las **op
 - `network_mode: host`.
 - NVIDIA solo para cómputo.
 - `rest-server` en modo `append-only`.
-- UFW con Docker.
 - Moshi con Mosh frente a SSH con tmux.
 - Homepage frente a Homarr.
 - Beszel y Dozzle frente a Grafana o Netdata.
