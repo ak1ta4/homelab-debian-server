@@ -16,6 +16,8 @@ Las guías nunca muestran valores reales. Usan estos marcadores; los valores de 
 | `<USUARIO_GITHUB>` | Usuario de GitHub dueño del repositorio |
 | `<USUARIO_WINDOWS>` | Usuario de Windows en el PC |
 | `<IP_BLOQUEADA>` | IP que Fail2ban ha bloqueado, tal como sale en `fail2ban-client status sshd` |
+| `<ID_DISCO_DATOS>` | Nombre del disco de datos en `/dev/disk/by-id/`. Incluye el número de serie |
+| `<UUID_DATOS>` | UUID del sistema de archivos btrfs del disco de datos (`lsblk -o NAME,UUID`) |
 | `<DOMINIO>` | Dominio propio (Fase 4) |
 | `<RED_LAN_REGEX>`, `<IP_PUBLICA_REGEX>`, `<OTROS_NOMBRES>` | Valores reales escritos como expresión regular, solo en la configuración local de gitleaks |
 | `AAAAMMDD` | Fecha del día en las copias de seguridad, por ejemplo `20261108` |
