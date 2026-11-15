@@ -126,6 +126,7 @@ Pedido por el dueño fuera de orden. Guía: [`stacks/jellyfin/`](../stacks/jelly
   - Una película se ve en la tele con reproducción directa.
   - Al bajar la calidad a 8 Mbps, transcodifica sin cortes.
 - Pendiente: la prueba de reinicio.
+- Cortes en la tele por Wi-Fi (2026-11-15): el servidor no tenía cola y el disco lee a 861 MB/s, pero la tele solo recibía ~5 Mbit/s (el router mostraba su enlace a `866/6` con buena señal). Por cable recibe 15-19 Mbit/s y va bien. En el router, el 5 GHz pasó de `Auto` (canal 100, DFS, 160 MHz) a canal 36 con 80 MHz; no bastó por sí solo. Para volver al Wi-Fi: reiniciar el router y, si se repite, probar a quitar funciones como *Beam Forming* o *MLO* una a una.
 
 ## Pendiente de verificar
 

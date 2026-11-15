@@ -138,7 +138,14 @@ Después, **Panel de control** → **Bibliotecas** → **Escanear todas las bibl
 | "Ha habido un error procesando la solicitud" al crear el usuario del asistente | Asistente empezado en un dispositivo y repetido en otro: el primero ya había creado el usuario sin terminar el asistente (causa probable) | Empezar de cero (abajo) y hacerlo del tirón en un solo dispositivo |
 | El asistente "no encuentra la ruta" de la biblioteca | Ruta escrita a mano (la tilde) | Elegirla con clics en el selector |
 | `sudo cat …/passwordreset*.json`: no existe | El `*` lo expande tu usuario, que no puede leer `config/` | `sudo sh -c 'cat …/passwordreset*.json'`. Aquí ni así apareció el archivo; se optó por empezar de cero |
+| Cortes en reproducción directa por Wi-Fi | El enlace Wi-Fi con la tele bajó a ~6 Mbit/s (el router mostraba `866/6`) con buena señal; la película pide 17 de media | Medir dónde está el atasco (abajo). Aquí, por cable va bien. En el router, 5 GHz en un canal sin DFS (36) a 80 MHz |
 | Un dispositivo de casa no conecta | IP del servidor cambiada o la regla con otra red | `sudo iptables -S DOCKER-USER` y `ss -tlnH 'sport = :8096'` |
+
+**Dónde está el atasco.** Con la película en marcha:
+```bash
+sudo nsenter -n -t <PID de jellyfin> ss -tin
+```
+Si la conexión de vídeo tiene mucho `Send-Q`/`notsent` y un `rtt` de segundos frente a un `minrtt` de milisegundos, el servidor envía pero el camino o el cliente no da abasto. Si `tc -s qdisc show dev <interfaz>` no tiene `backlog`, la cola no está en el servidor. El tráfico de Jellyfin se mide en el `veth` del contenedor (`/sys/class/net/veth…/statistics/rx_bytes`).
 
 **Empezar de cero** (borra solo la configuración de Jellyfin, no los vídeos):
 ```bash
