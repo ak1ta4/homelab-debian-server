@@ -88,6 +88,19 @@ Errores reales, con su causa y su solución. Se escribe mientras se trabaja, no 
 - `claude --dangerously-skip-permissions` **se ignoró en vez de rechazarse** en la versión 2.1.309. Lo válido fue comprobar que el modo seguía en `default` y que un `touch` no se ejecutaba sin aprobación.
 - **Lección:** verificar el efecto real de cada control, no el mensaje del programa.
 
+## El asistente de Jellyfin, empezado en dos sitios
+
+- **Síntoma:** "Ha habido un error procesando la solicitud" al crear el usuario, en la tele y en el PC. El registro decía `CustomAuthentication was forbidden` y `IsStartupWizardCompleted` seguía en `false`.
+- **Causa probable:** el asistente se empezó en el PC, llegó a crear el usuario y la biblioteca, pero no se terminó. Al repetirlo desde la tele, Jellyfin no dejaba volver a crear el usuario.
+- **Solución:** borrar solo la configuración, que estaba vacía, y hacer el asistente del tirón desde el PC.
+- **Lección:** los asistentes de primera configuración, en un solo dispositivo y hasta el final. Si algo falla, el registro antes que las suposiciones.
+
+## Un `*` con `sudo` en una carpeta que no puedes leer
+
+- **Síntoma:** `sudo cat /carpeta/archivo*.json` decía que no existía.
+- **Causa:** el `*` lo expande la shell de tu usuario **antes** de `sudo`. Sin permiso para leer la carpeta, no se expande y `cat` recibe el `*` literal.
+- **Solución:** `sudo sh -c 'cat /carpeta/archivo*.json'`, o el nombre completo.
+
 ## El manual de una opción decía lo contrario de lo que hace
 
 - `google-authenticator -W` aparece en el manual como "desactivar la ventana de códigos", pero en modo TOTP el código fuente escribe `WINDOW_SIZE 3`: la ventana estándar (código anterior, actual y siguiente).

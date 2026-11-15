@@ -28,7 +28,7 @@ Guía: [`01-base-y-endurecimiento/`](01-base-y-endurecimiento/README.md).
 | 6. Actualizaciones de seguridad | Hecho (2026-11-14). Falta la prueba de reinicio |
 | 7. Firewall | Hecho (2026-11-14). Falta la prueba de reinicio |
 | 8. Docker | Hecho (2026-11-15). Falta la prueba de reinicio |
-| 9. Resto de la base | Pendiente |
+| 9. Resto de la base | En curso (2026-11-15) |
 
 ### Paso 2: SSH de emergencia
 
@@ -101,6 +101,25 @@ Guía: [`01-base-y-endurecimiento/`](01-base-y-endurecimiento/README.md).
 - **Comprobado:**
   - Un puerto publicado sin IP escucha solo en `127.0.0.1`.
   - El filtro de salida del agente sigue funcionando con Docker activo.
+
+### Paso 9: resto de la base (en curso)
+
+- Lynis 3.1.4 "antes": índice 72, sin avisos, 46 sugerencias. ssh-audit 3.3.0 "antes" guardado.
+- Algoritmos SSH (2026-11-15): probados con desactivación automática a los 5 minutos. El PC entró; **Termius en el iPhone no**. Se deshizo solo y el iPhone vuelve a entrar. Falta saber qué algoritmo necesita Termius.
+
+## Adelantado: Jellyfin (2026-11-15)
+
+Pedido por el dueño fuera de orden. Guía: [`stacks/jellyfin/`](../stacks/jellyfin/README.md).
+
+- Imagen oficial `12.4` con Compose, usuario `jellyfin` sin capacidades y vídeos en solo lectura desde `/srv/datos/Videos` (subvolumen propio).
+- Puerto 8096 solo en `<IP_SERVIDOR>`, limitado a `<RED_LAN>` en `DOCKER-USER` por `homelab-jellyfin-lan.service`.
+- VA-API en la AMD integrada.
+- **Comprobado:**
+  - `vainfo` abre la AMD dentro del contenedor.
+  - Una película se ve en la tele con reproducción directa.
+- Pendiente:
+  - Una transcodificación real con VA-API.
+  - La prueba de reinicio.
 
 ## Pendiente de verificar
 
