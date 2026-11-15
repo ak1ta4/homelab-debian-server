@@ -128,11 +128,23 @@ Pedido por el dueño fuera de orden. Guía: [`stacks/jellyfin/`](../stacks/jelly
 - Pendiente: la prueba de reinicio.
 - Cortes en la tele por Wi-Fi (2026-11-15): el servidor no tenía cola y el disco lee a 861 MB/s, pero la tele solo recibía ~5 Mbit/s (el router mostraba su enlace a `866/6` con buena señal). Por cable recibe 15-19 Mbit/s y va bien. En el router, el 5 GHz pasó de `Auto` (canal 100, DFS, 160 MHz) a canal 36 con 80 MHz; no bastó por sí solo. Para volver al Wi-Fi: reiniciar el router y, si se repite, probar a quitar funciones como *Beam Forming* o *MLO* una a una.
 
+## Fase 2: escritorio remoto (2026-11-15)
+
+Guía: [`02-escritorio-remoto.md`](02-escritorio-remoto.md).
+
+- Sunshine 2026.914.233613 desde su repositorio oficial (Cloudsmith), con un pin que solo acepta `sunshine`, y dentro de las actualizaciones automáticas. Clave comprobada con la firma del `InRelease` y comparando el `.deb` con el de GitHub (misma SHA-256).
+- Configuración correcta: `kms`, `vaapi` y `renderD128`. Emparejados solo el PC y el iPad.
+- Moonlight con la tapa entreabierta (decisión del dueño).
+- El aviso de `nvidia-drm` se repitió a las 19:41 al conectar Moonlight: lo provoca Sunshine al abrir todas las pantallas por KMS. Sin efecto visible; drivers sin tocar.
+- Pendiente:
+  - Reiniciar Sunshine para borrar el aviso de arranque del panel (`Unable to find display or encoder during startup`).
+  - Comprobar Moonlight tras un reinicio del servidor.
+
 ## Pendiente de verificar
 
 - Las reservas DHCP, en el próximo reinicio de cada equipo.
 - Que la regla del router que tapa su SSH sigue en su sitio: en el calendario periódico.
-- Aviso del núcleo en `nvidia-drm` (550.163.01) el 2026-11-14 a las 20:16: `WARNING` en `nv_drm_revoke_modeset_permission`, dos veces seguidas, sin caída. Sin tocar drivers. Si se repite o coincide con cortes de Moonlight, se investiga en la Fase 2.
+- Aviso del núcleo en `nvidia-drm` (550.163.01) el 2026-11-14 a las 20:16: `WARNING` en `nv_drm_revoke_modeset_permission`, dos veces seguidas, sin caída. Sin tocar drivers. Se repite al conectar Moonlight (ver Fase 2); solo se investiga si coincide con cortes o cuelgues.
 
 ## Próximo
 
