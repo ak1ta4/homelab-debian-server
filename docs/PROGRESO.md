@@ -110,6 +110,7 @@ Guía: [`01-base-y-endurecimiento/`](01-base-y-endurecimiento/README.md).
   - **Termius (iPhone y iPad) no entra:** negocia la clave ECDSA y, con solo `ed25519` y RSA, corta antes de autenticarse, incluso tras borrar el *known host*. El dueño decide aplicarlo igualmente y dejar Termius para más adelante.
 - Base (2026-11-15): `su` solo para el grupo `sudo` (`pam_wheel`, copia en `/etc/pam.d/su.bak-20261115`); `libpam-pwquality` con `minlen = 12`; `needrestart` 3.11 solo en modo aviso (`l`); `dccp`, `sctp`, `rds` y `tipc` sin poder cargarse. **Comprobado:** `modprobe -n -v dccp` da `install /bin/false` y `needrestart` no ve nada pendiente.
 - Hora (2026-11-15): chrony 4.6.1 con NTS en sustitución de `systemd-timesyncd`. Solo fuentes NTS (`sources.d/homelab-nts.sources`: Netnod, PTB ×2, TimeNL y Cloudflare); el pool de Debian y las fuentes por DHCP, comentados (copia `chrony.conf.bak-20261115`). **Comprobado:** las 5 en modo NTS con 8 cookies, sincronizado y `Leap status: Normal`.
+- Núcleo (2026-11-15): `/etc/sysctl.d/90-homelab.conf` con `kptr_restrict=2`, `ldisc_autoload=0`, `protected_fifos=2`, `ptrace_scope=1`, `bpf_jit_harden=2`, `kexec_load_disabled=1`, sin `send_redirects` ni `secure_redirects`, `log_martians=1` y `rp_filter=2` (flexible, por Docker y Tailscale). Sin tocar `ip_forward`, `sysrq`, `modules_disabled` ni los espacios de nombres de usuario. **Comprobado:** SSH nuevo, Moonlight, Jellyfin y la salida del agente funcionan.
 
 ## Adelantado: Jellyfin (2026-11-15)
 
