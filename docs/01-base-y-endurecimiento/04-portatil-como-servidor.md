@@ -131,7 +131,7 @@ upower -d | grep critical-action
 ```
 ✅ `critical-action: PowerOff`.
 
-### 4.4 BIOS: límite de carga y encendido tras un corte (pendiente)
+### 4.4 BIOS: límite de carga y encendido tras un corte
 
 **Desde Linux no se puede limitar la carga en este modelo.** Comprobado sin `sudo`:
 - El núcleo no ofrece `charge_control_end_threshold` en `/sys/class/power_supply/BAT0/`.
@@ -144,6 +144,11 @@ En persona: reiniciar y pulsar `F10` en el logotipo de HP. **Solo mirar**, y ano
 
 Cualquier cambio en la BIOS necesita confirmación expresa.
 
+**Resultado (2026-11-15), hecho por el dueño en persona:**
+- Límite de carga activado.
+- No hay opción de encender tras un corte. Se acepta: la batería hace de SAI, y solo si se agota (apagado limpio al 10 %) habrá que encenderlo a mano.
+- Justo después, la batería seguía al 100 % (`Full`): el límite de HP puede ser adaptativo. Se revisará `capacity` dentro de unos días.
+
 ## 5. Verificación
 
 - [x] logind responde `no` a suspender, hibernar, suspensión híbrida y suspender-y-hibernar.
@@ -152,7 +157,7 @@ Cualquier cambio en la BIOS necesita confirmación expresa.
 - [ ] Tapa cerrada 30 minutos con cargador: SSH vivo, `uptime` sigue, el registro de logind dice "Lid closed" sin suspender, y temperaturas anotadas antes y después.
 - [ ] Cargador desenchufado 10 minutos: sigue encendido y `upower -d` muestra `on-battery: yes`.
 - [ ] Reinicio con la tapa cerrada: vuelve solo, con su IP reservada, y SSH con clave + TOTP.
-- [ ] BIOS revisada (4.4).
+- [x] BIOS revisada (4.4): límite de carga activado; sin encendido tras un corte.
 - [ ] El apagado al 10 % se comprueba solo por configuración, salvo que se haga una descarga completa.
 
 ## 6. Errores frecuentes

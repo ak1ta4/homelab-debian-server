@@ -56,7 +56,7 @@ Guía: [`01-base-y-endurecimiento/`](01-base-y-endurecimiento/README.md).
   - La tapa no hace nada (`logind.conf.d/10-homelab.conf`), aplicado con `reload`.
   - UPower: `PowerOff` al 10 % (umbrales 25/15/10). No admite archivos parciales: se editó `UPower.conf` con copia `.bak-20261114`.
 - Pendiente:
-  - BIOS: límite de carga y encendido tras un corte.
+  - BIOS (2026-11-15): límite de carga activado; no existe encender tras un corte (la batería hace de SAI). Revisar en unos días que la carga baja del 100 %.
   - Pruebas físicas aplazadas por el dueño: tapa cerrada, cargador desenchufado y reinicio con la tapa cerrada.
 - Moonlight: con la **tapa entreabierta**, por decisión del dueño (2026-11-15). Se descartan la pantalla virtual y el enchufe HDMI falso.
 
@@ -136,7 +136,6 @@ Pedido por el dueño fuera de orden. Guía: [`stacks/jellyfin/`](../stacks/jelly
 ## Próximo
 
 - Sesión en persona:
-  - BIOS: límite de carga y encendido tras un corte.
   - Pruebas físicas del paso 4.
   - Arranque con el disco de datos conectado y desconectado.
 - Termius sin SSH tras el cambio de algoritmos.
