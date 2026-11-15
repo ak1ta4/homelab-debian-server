@@ -193,7 +193,7 @@ sudo systemctl restart upower
 - Durante un corte, el router también se apaga: el servidor sigue encendido pero sin red.
 - Con el cargador siempre puesto, la batería se desgasta antes si no hay límite de carga.
 - Con la tapa cerrada se ventila peor: hay que vigilar las temperaturas (monitorización en la Fase 5).
-- Moonlight con la tapa cerrada no está resuelto: la pantalla interna se apaga y Sunshine la captura por KMS. Se trata en la Fase 2.
+- Moonlight necesita la pantalla interna encendida, porque Sunshine la captura por KMS. El dueño decidió (2026-11-15) dejar la **tapa entreabierta** en vez de una pantalla virtual (toca el arranque) o un enchufe HDMI falso (el HDMI va por la NVIDIA). La pantalla se apaga sola por inactividad y Moonlight la despierta.
 
 ## 9. Para la entrevista
 

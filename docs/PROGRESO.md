@@ -57,7 +57,8 @@ Guía: [`01-base-y-endurecimiento/`](01-base-y-endurecimiento/README.md).
   - UPower: `PowerOff` al 10 % (umbrales 25/15/10). No admite archivos parciales: se editó `UPower.conf` con copia `.bak-20261114`.
 - Pendiente:
   - BIOS: límite de carga y encendido tras un corte.
-  - Pruebas físicas aplazadas por el dueño: tapa cerrada, cargador desenchufado y reinicio con la tapa cerrada (incluye Moonlight).
+  - Pruebas físicas aplazadas por el dueño: tapa cerrada, cargador desenchufado y reinicio con la tapa cerrada.
+- Moonlight: con la **tapa entreabierta**, por decisión del dueño (2026-11-15). Se descartan la pantalla virtual y el enchufe HDMI falso.
 
 ### Paso 5: disco de datos
 
