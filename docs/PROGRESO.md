@@ -117,9 +117,8 @@ Pedido por el dueño fuera de orden. Guía: [`stacks/jellyfin/`](../stacks/jelly
 - **Comprobado:**
   - `vainfo` abre la AMD dentro del contenedor.
   - Una película se ve en la tele con reproducción directa.
-- Pendiente:
-  - Una transcodificación real con VA-API.
-  - La prueba de reinicio.
+  - Al bajar la calidad a 8 Mbps, transcodifica sin cortes.
+- Pendiente: la prueba de reinicio.
 
 ## Pendiente de verificar
 

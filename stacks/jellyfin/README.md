@@ -127,7 +127,7 @@ Después, **Panel de control** → **Bibliotecas** → **Escanear todas las bibl
   ```
 - [x] Una película se ve en la tele LG (app webOS) con reproducción directa.
 - [x] Jellyfin ve la IP real del cliente de la LAN, no la de Docker.
-- [ ] Una transcodificación real con VA-API (bajar la calidad en el reproductor y mirar el panel).
+- [x] Al bajar la calidad a 8 Mbps en la tele, el panel muestra "Transcodificación" y se ve sin cortes.
 - [ ] Tras un reinicio: la regla vuelve y Jellyfin arranca. En la sesión en persona.
 - [ ] Desde fuera de la LAN no llega: escaneo de la Fase 8.
 
