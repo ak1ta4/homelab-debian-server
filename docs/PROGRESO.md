@@ -105,7 +105,9 @@ Guía: [`01-base-y-endurecimiento/`](01-base-y-endurecimiento/README.md).
 ### Paso 9: resto de la base (en curso)
 
 - Lynis 3.1.4 "antes": índice 72, sin avisos, 46 sugerencias. ssh-audit 3.3.0 "antes" guardado.
-- Algoritmos SSH (2026-11-15): probados con desactivación automática a los 5 minutos. El PC entró; **Termius en el iPhone no**. Se deshizo solo y el iPhone vuelve a entrar. Falta saber qué algoritmo necesita Termius.
+- Algoritmos SSH (2026-11-15) en `sshd_config.d/11-homelab-algoritmos.conf`: sin curvas NIST, SHA-1 ni MAC sin *encrypt-then-MAC*. Probado con desactivación automática a los 5 minutos.
+  - **Comprobado:** el PC entra, y `ssh-audit -l warn` no da avisos ni fallos.
+  - **Termius (iPhone y iPad) no entra:** negocia la clave ECDSA y, con solo `ed25519` y RSA, corta antes de autenticarse, incluso tras borrar el *known host*. El dueño decide aplicarlo igualmente y dejar Termius para más adelante.
 
 ## Adelantado: Jellyfin (2026-11-15)
 
