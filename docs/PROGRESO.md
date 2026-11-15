@@ -28,7 +28,7 @@ Guía: [`01-base-y-endurecimiento/`](01-base-y-endurecimiento/README.md).
 | 6. Actualizaciones de seguridad | Hecho (2026-11-14). Falta la prueba de reinicio |
 | 7. Firewall | Hecho (2026-11-14). Falta la prueba de reinicio |
 | 8. Docker | Hecho (2026-11-15). Falta la prueba de reinicio |
-| 9. Resto de la base | En curso (2026-11-15) |
+| 9. Resto de la base | Hecho (2026-11-15). Falta la prueba de reinicio y Termius |
 
 ### Paso 2: SSH de emergencia
 
@@ -102,7 +102,7 @@ Guía: [`01-base-y-endurecimiento/`](01-base-y-endurecimiento/README.md).
   - Un puerto publicado sin IP escucha solo en `127.0.0.1`.
   - El filtro de salida del agente sigue funcionando con Docker activo.
 
-### Paso 9: resto de la base (en curso)
+### Paso 9: resto de la base
 
 - Lynis 3.1.4 "antes": índice 72, sin avisos, 46 sugerencias. ssh-audit 3.3.0 "antes" guardado.
 - Algoritmos SSH (2026-11-15) en `sshd_config.d/11-homelab-algoritmos.conf`: sin curvas NIST, SHA-1 ni MAC sin *encrypt-then-MAC*. Probado con desactivación automática a los 5 minutos.
@@ -111,6 +111,7 @@ Guía: [`01-base-y-endurecimiento/`](01-base-y-endurecimiento/README.md).
 - Base (2026-11-15): `su` solo para el grupo `sudo` (`pam_wheel`, copia en `/etc/pam.d/su.bak-20261115`); `libpam-pwquality` con `minlen = 12`; `needrestart` 3.11 solo en modo aviso (`l`); `dccp`, `sctp`, `rds` y `tipc` sin poder cargarse. **Comprobado:** `modprobe -n -v dccp` da `install /bin/false` y `needrestart` no ve nada pendiente.
 - Hora (2026-11-15): chrony 4.6.1 con NTS en sustitución de `systemd-timesyncd`. Solo fuentes NTS (`sources.d/homelab-nts.sources`: Netnod, PTB ×2, TimeNL y Cloudflare); el pool de Debian y las fuentes por DHCP, comentados (copia `chrony.conf.bak-20261115`). **Comprobado:** las 5 en modo NTS con 8 cookies, sincronizado y `Leap status: Normal`.
 - Núcleo (2026-11-15): `/etc/sysctl.d/90-homelab.conf` con `kptr_restrict=2`, `ldisc_autoload=0`, `protected_fifos=2`, `ptrace_scope=1`, `bpf_jit_harden=2`, `kexec_load_disabled=1`, sin `send_redirects` ni `secure_redirects`, `log_martians=1` y `rp_filter=2` (flexible, por Docker y Tailscale). Sin tocar `ip_forward`, `sysrq`, `modules_disabled` ni los espacios de nombres de usuario. **Comprobado:** SSH nuevo, Moonlight, Jellyfin y la salida del agente funcionan.
+- Lynis "después": **76** (antes 72), sin avisos, 41 sugerencias. Guía: [`09-resto-de-la-base.md`](01-base-y-endurecimiento/09-resto-de-la-base.md).
 
 ## Adelantado: Jellyfin (2026-11-15)
 
@@ -137,4 +138,4 @@ Pedido por el dueño fuera de orden. Guía: [`stacks/jellyfin/`](../stacks/jelly
   - BIOS: límite de carga y encendido tras un corte.
   - Pruebas físicas del paso 4.
   - Arranque con el disco de datos conectado y desconectado.
-- Mientras tanto: paso 9, el resto de la base y Lynis.
+- Termius sin SSH tras el cambio de algoritmos.
