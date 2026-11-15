@@ -20,6 +20,7 @@ Ver [`docs/PROGRESO.md`](docs/PROGRESO.md).
 | Archivos | Syncthing + File Browser |
 | Notas | Obsidian con Self-hosted LiveSync (CouchDB, cifrado de extremo a extremo) |
 | Fotos | Immich |
+| Películas y series | Jellyfin |
 | Copias | restic hacia el PC, con `rest-server` en modo `append-only` |
 | Panel | Homepage, Beszel y Dozzle |
 | Escritorio remoto | Sunshine bajo demanda, cliente Moonlight |
