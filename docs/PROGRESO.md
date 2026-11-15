@@ -108,6 +108,7 @@ Guía: [`01-base-y-endurecimiento/`](01-base-y-endurecimiento/README.md).
 - Algoritmos SSH (2026-11-15) en `sshd_config.d/11-homelab-algoritmos.conf`: sin curvas NIST, SHA-1 ni MAC sin *encrypt-then-MAC*. Probado con desactivación automática a los 5 minutos.
   - **Comprobado:** el PC entra, y `ssh-audit -l warn` no da avisos ni fallos.
   - **Termius (iPhone y iPad) no entra:** negocia la clave ECDSA y, con solo `ed25519` y RSA, corta antes de autenticarse, incluso tras borrar el *known host*. El dueño decide aplicarlo igualmente y dejar Termius para más adelante.
+- Base (2026-11-15): `su` solo para el grupo `sudo` (`pam_wheel`, copia en `/etc/pam.d/su.bak-20261115`); `libpam-pwquality` con `minlen = 12`; `needrestart` 3.11 solo en modo aviso (`l`); `dccp`, `sctp`, `rds` y `tipc` sin poder cargarse. **Comprobado:** `modprobe -n -v dccp` da `install /bin/false` y `needrestart` no ve nada pendiente.
 
 ## Adelantado: Jellyfin (2026-11-15)
 
