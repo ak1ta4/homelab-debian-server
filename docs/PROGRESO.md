@@ -109,6 +109,7 @@ Guía: [`01-base-y-endurecimiento/`](01-base-y-endurecimiento/README.md).
   - **Comprobado:** el PC entra, y `ssh-audit -l warn` no da avisos ni fallos.
   - **Termius (iPhone y iPad) no entra:** negocia la clave ECDSA y, con solo `ed25519` y RSA, corta antes de autenticarse, incluso tras borrar el *known host*. El dueño decide aplicarlo igualmente y dejar Termius para más adelante.
 - Base (2026-11-15): `su` solo para el grupo `sudo` (`pam_wheel`, copia en `/etc/pam.d/su.bak-20261115`); `libpam-pwquality` con `minlen = 12`; `needrestart` 3.11 solo en modo aviso (`l`); `dccp`, `sctp`, `rds` y `tipc` sin poder cargarse. **Comprobado:** `modprobe -n -v dccp` da `install /bin/false` y `needrestart` no ve nada pendiente.
+- Hora (2026-11-15): chrony 4.6.1 con NTS en sustitución de `systemd-timesyncd`. Solo fuentes NTS (`sources.d/homelab-nts.sources`: Netnod, PTB ×2, TimeNL y Cloudflare); el pool de Debian y las fuentes por DHCP, comentados (copia `chrony.conf.bak-20261115`). **Comprobado:** las 5 en modo NTS con 8 cookies, sincronizado y `Leap status: Normal`.
 
 ## Adelantado: Jellyfin (2026-11-15)
 
