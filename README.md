@@ -34,7 +34,8 @@ Ver [`docs/PROGRESO.md`](docs/PROGRESO.md).
    - [Fase 0: auditoría](docs/00-auditoria.md)
    - [Fase 1: base y endurecimiento](docs/01-base-y-endurecimiento/README.md)
    - [Fase 2: escritorio remoto](docs/02-escritorio-remoto.md)
-   - Las siguientes fases, `docs/03-…` a `docs/08-…`, a medida que se hagan.
+   - [Fase 3: acceso desde fuera](docs/03-acceso-remoto.md)
+   - Las siguientes fases, `docs/04-…` a `docs/08-…`, a medida que se hagan.
 4. [`docs/decisiones/`](docs/decisiones/README.md): un ADR por decisión, con las alternativas descartadas.
 5. [`docs/guia-securizacion.md`](docs/guia-securizacion.md): qué se aplicó, adaptó o descartó de la guía de referencia.
 6. [`docs/lecciones-aprendidas.md`](docs/lecciones-aprendidas.md) y [`docs/entrevista.md`](docs/entrevista.md).

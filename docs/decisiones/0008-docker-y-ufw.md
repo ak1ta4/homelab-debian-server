@@ -29,3 +29,4 @@ La documentación oficial de Docker avisa: "when you expose container ports usin
 - **Comprobado:** con Docker activo, el filtro de salida del agente sigue funcionando, incluido el rechazo hacia la red de Docker (`172.17.0.1`). La combinación no está soportada oficialmente: se repite la prueba tras cada actualización grande de Docker.
 - Una actualización grande de Docker (`AA.MM`) reinicia los contenedores: `live-restore` solo cubre las de parche (`AA.MM.x`). Ocurrirá de madrugada.
 - Escaneo de puertos desde otro equipo de la LAN: en la Fase 8.
+- **Actualización (2026-11-15):** Jellyfin se publica en `0.0.0.0` (solo IPv4) para servir también a la tailnet, y su regla de `DOCKER-USER` limita el origen a `<RED_LAN>` y a `100.64.0.0/10` por `tailscale0` ([ADR 0009](0009-tailscale.md)).

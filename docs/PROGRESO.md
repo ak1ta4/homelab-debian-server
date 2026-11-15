@@ -140,6 +140,21 @@ Guía: [`02-escritorio-remoto.md`](02-escritorio-remoto.md).
   - Reiniciar Sunshine para borrar el aviso de arranque del panel (`Unable to find display or encoder during startup`).
   - Comprobar Moonlight tras un reinicio del servidor.
 
+## Fase 3: acceso desde fuera (2026-11-15)
+
+Guía: [`03-acceso-remoto.md`](03-acceso-remoto.md). Decisión: [ADR 0009](decisiones/0009-tailscale.md).
+
+- Tailscale 1.104.7 desde su repositorio (clave comprobada en tres sitios), con pin y en las actualizaciones automáticas. Servidor con `tag:server` y sin el DNS de Tailscale.
+- Política: los dispositivos del dueño solo llegan al servidor, por TCP 22, 8096, 47984, 47989 y 48010 y UDP 47998-48000.
+- UFW: esos puertos solo en `tailscale0`, más UDP 41641. Jellyfin en `0.0.0.0` (IPv4), con `RETURN` para la tailnet en `DOCKER-USER`, y la tailnet en sus **Redes locales**.
+- Incidente: al conectar, Tailscale puso su DNS y el agente se quedó sin conexión (su filtro bloquea `100.64.0.0/10`). Lo corrigió el dueño con `tailscale set --accept-dns=false`.
+- **Comprobado** desde el iPhone con datos: Jellyfin y Moonlight (iPhone emparejado en Sunshine). Por el repetidor de Madrid, 40 ms.
+- Pendiente:
+  - SSH por la tailnet (Termius, o el PC con Tailscale).
+  - Tailscale en el PC y el iPad.
+  - La prueba de reinicio.
+  - Tailnet Lock, como mejora.
+
 ## Pendiente de verificar
 
 - Las reservas DHCP, en el próximo reinicio de cada equipo.

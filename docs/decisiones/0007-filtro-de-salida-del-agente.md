@@ -31,6 +31,7 @@ No se usa `/etc/nftables.conf`, porque empieza con `flush ruleset` y borraría l
 
 - **Comprobado:** DNS y HTTPS a Anthropic y Debian funcionan. El router (443 y 22), el panel de Sunshine (local y por la LAN), el SSH local y el HTTP (80) se rechazan.
 - **Riesgo que queda:** por HTTPS, el agente puede enviar a cualquier web lo que pueda leer. Se valorará la lista cerrada de dominios en la Fase 7.
+- **Tailscale (2026-11-15):** su DNS (`100.100.100.100`) está en `100.64.0.0/10`, bloqueado para el agente. Con él activo, el agente se queda sin DNS: el servidor usa `--accept-dns=false` ([ADR 0009](0009-tailscale.md)).
 - En la **Fase 4**, si el DNS pasa a AdGuard en el propio servidor, el agente no podrá usarlo (`lo` y LAN rechazados): habrá que permitir el 53 local o seguir con DNS públicos para el agente.
 - Si Claude Code necesitara otro puerto o un servicio local, fallará de forma visible ("connection refused") y se decidirá aquí, no con una excepción silenciosa.
 - Revertir: `sudo systemctl disable --now homelab-agente-salida`.

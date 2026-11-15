@@ -9,8 +9,8 @@ services:
     devices:
       - /dev/dri/renderD128:/dev/dri/renderD128
     ports:
-      # Solo en la IP de la LAN; el origen se limita en DOCKER-USER.
-      - "${IP_SERVIDOR}:8096:8096/tcp"
+      # Todas las IPv4 (LAN y tailnet); el origen se limita en DOCKER-USER.
+      - "0.0.0.0:8096:8096/tcp"
     volumes:
       - ./config:/config
       - ./cache:/cache

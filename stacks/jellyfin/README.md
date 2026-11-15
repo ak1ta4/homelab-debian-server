@@ -12,7 +12,7 @@
 - Imagen oficial `jellyfin/jellyfin` con Compose, en red *bridge* y con un usuario de sistema propio (`jellyfin`), sin capacidades.
 - Vídeos en un subvolumen btrfs propio (`/srv/datos/Videos`), montado **solo lectura** en el contenedor.
 - Conversión de vídeo por hardware con VA-API en la gráfica AMD integrada (`renderD128`, la misma que usa Sunshine). La NVIDIA no se toca.
-- Puerto 8096 publicado solo en `<IP_SERVIDOR>` y limitado a `<RED_LAN>` en la cadena `DOCKER-USER` ([ADR 0008](../../docs/decisiones/0008-docker-y-ufw.md)).
+- Puerto 8096 publicado en todas las IPv4 y limitado a `<RED_LAN>` y a la tailnet en la cadena `DOCKER-USER` ([ADR 0008](../../docs/decisiones/0008-docker-y-ufw.md), [ADR 0009](../../docs/decisiones/0009-tailscale.md)). Al principio se publicaba solo en `<IP_SERVIDOR>`; el cambio y la regla actual están en la [Fase 3](../../docs/03-acceso-remoto.md#44-firewall).
 
 ## 2. Conceptos previos
 

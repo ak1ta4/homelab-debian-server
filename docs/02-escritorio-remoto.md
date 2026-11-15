@@ -109,7 +109,7 @@ Sunshine captura la pantalla interna por KMS: con la tapa cerrada se apaga y no 
 - [x] Clave comprobada con la firma del `InRelease` y con el mismo `.deb` en GitHub.
 - [x] `apt-cache policy` y `unattended-upgrade --dry-run` incluyen el repositorio.
 - [x] Configuración `kms`, `vaapi` y `renderD128`.
-- [x] Solo el PC y el iPad emparejados.
+- [x] Solo el PC y el iPad emparejados. El iPhone se emparejó después, en la [Fase 3](03-acceso-remoto.md).
 - [x] Moonlight y una película de Jellyfin a la vez, con la tele por cable, sin cortes.
 - [ ] Reiniciar Sunshine y comprobar que el panel ya no muestra el aviso de arranque.
 - [ ] Tras un reinicio del servidor, Moonlight funciona sin tocar nada. En la sesión en persona.
