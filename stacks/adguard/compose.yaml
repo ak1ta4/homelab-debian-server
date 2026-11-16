@@ -1,0 +1,22 @@
+# Homelab: AdGuard Home. Los valores de este equipo están en .env, al lado.
+services:
+  adguard:
+    image: adguard/adguardhome:v0.107.80
+    container_name: adguard
+    user: "${ADGUARD_UID}:${ADGUARD_GID}"
+    ports:
+      # Todas las IPv4; el origen se limita en DOCKER-USER.
+      # Dentro escucha en puertos altos (DNS 5353, panel 3000).
+      - "0.0.0.0:53:5353/udp"
+      - "0.0.0.0:53:5353/tcp"
+      - "0.0.0.0:3000:3000/tcp"  # panel (solo LAN)
+    volumes:
+      - ./work:/opt/adguardhome/work
+      - ./conf:/opt/adguardhome/conf
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE  # solo para poder ejecutar el binario (setcap)
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
