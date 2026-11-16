@@ -176,26 +176,35 @@ Guía: [`04-dns.md`](04-dns.md). Decisión: [ADR 0010](decisiones/0010-dns-de-ca
 
 ## Fase 5: servicios (en curso, desde 2026-11-16)
 
-Plan aprobado por el dueño:
+Guía: [`05-servicios/`](05-servicios/README.md). Plan aprobado por el dueño:
 - **5.0** Dominio y Caddy (DNS-01 con Cloudflare). Aplazado hasta que el dueño compre el dominio.
 - **5.1** Monitorización: Beszel, Dozzle y Homepage como panel para acceder a todo. Incluye lo que quedó de la Fase 4: hoja imprimible para volver al DNS del router, registros de AdGuard 7 días y filtros más fuertes.
 - **5.2** Alertas por correo dedicado y bot de Telegram (avisos y consultas de una lista cerrada). La parte de hablar con una IA va a la Fase 7.
-- **5.3** Nube, **adelantada por el dueño**: Syncthing del PC al servidor, y Samba en solo lectura para el iPhone y el iPad. File Browser se descarta: está archivado desde el 2026-09-01.
+- **5.3** Nube, **adelantada por el dueño**: Syncthing del PC al servidor, y Samba para el iPhone y el iPad. File Browser se descarta: está archivado desde el 2026-09-01.
 - **5.4** Traer archivos del PC (Wake-on-LAN). **5.5** Obsidian (necesita HTTPS). **5.6** Immich, después de la nube. **5.7** Descargas con ClamAV. **5.8** Auditoría: logwatch, rkhunter y AIDE.
 
-### 5.3 Nube
+### 5.3 Nube (hecho, 2026-11-16 y 2026-11-17)
 
-- Syncthing `2.1.7` en Docker (2026-11-16):
-  - Usuario `syncthing` sin capacidades y `UMASK=027`.
+Guía: [`05-servicios/03-nube.md`](05-servicios/03-nube.md). Decisión: [ADR 0011](decisiones/0011-nube-con-syncthing-y-samba.md).
+
+- Syncthing `2.1.7` en Docker ([stack](../stacks/syncthing/README.md)):
+  - Usuario `syncthing` sin capacidades.
   - Datos en `/srv/datos/archivos/pc`; configuración en `/srv/syncthing/var`.
   - `homelab-syncthing-lan.service`: el 22000 (TCP y UDP), desde `<RED_LAN>` y la tailnet; el panel 8384, solo desde `<IP_PC>` y la tailnet.
-  - **Comprobado:** arranca como `syncthing`, sin errores de permisos, y las reglas están encima de las de AdGuard y Jellyfin.
-- Pendiente:
-  - En el panel: contraseña, HTTPS, y quitar NAT, descubrimiento local y global, y relays. Al arrancar se unió a un relay público, porque viene activado de fábrica.
-  - Syncthing en el PC: Imágenes, Vídeos y Documentos (unos 100 GB), enviar solamente. Revisar el `.stignore` con el dueño.
-  - Versiones escalonadas en el servidor.
-  - Samba en solo lectura.
-  - Guía y stack en el repositorio.
+  - Paneles con contraseña y HTTPS, sin relays, descubrimiento ni NAT traversal.
+- En el PC: zip oficial `2.1.7` (hash comprobado), acceso directo en Inicio y sin reglas de firewall. Llama a `tcp://<IP_SERVIDOR>:22000`.
+- Carpetas Documentos, Imágenes y Vídeos: el PC envía solamente y el servidor recibe solamente, con versiones escalonadas de 365 días. Documentos con sus [patrones a ignorar](../stacks/syncthing/documentos.stignore), revisados con el dueño.
+- Samba 4.22 en el host ([configuración](../stacks/samba/README.md)):
+  - `pc` en solo lectura y `subidas` con escritura, para un usuario sin shell;
+  - solo SMB3, sin NetBIOS ni invitados, y `vfs_fruit` para el iPhone;
+  - UFW 445 desde `<RED_LAN>` y `tailscale0`, y `"tcp:445"` en la política de Tailscale.
+- Incidente: los recomendados de Samba metieron `winbind` en PAM y en `nsswitch`. Se quitaron; `sudo` y SSH, probados.
+- **Comprobado:**
+  - 13.756 archivos y 76,8 GiB al día en los dos lados, en el disco de datos, sin secretos ni carpetas excluidas.
+  - Panel del servidor: `403` sin credenciales.
+  - Windows con SMB 3.1.1 cifrado; `pc`, solo lectura.
+  - iPhone en casa y por la tailnet: sube y descarga.
+- Pendiente: la prueba de reinicio. `UMASK=027` no se aplica (sin efecto, por el `750` de la carpeta).
 
 ## Pendiente de verificar
 

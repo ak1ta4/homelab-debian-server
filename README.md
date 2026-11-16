@@ -17,7 +17,7 @@ Ver [`docs/PROGRESO.md`](docs/PROGRESO.md).
 | Contenedores | Docker Engine oficial y Compose, un stack por servicio |
 | HTTPS | Caddy con certificado comodín por DNS-01 |
 | DNS | AdGuard Home para la casa y la tailnet |
-| Archivos | Syncthing + File Browser |
+| Archivos | Syncthing del PC al servidor + Samba |
 | Notas | Obsidian con Self-hosted LiveSync (CouchDB, cifrado de extremo a extremo) |
 | Fotos | Immich |
 | Películas y series | Jellyfin |
@@ -36,7 +36,8 @@ Ver [`docs/PROGRESO.md`](docs/PROGRESO.md).
    - [Fase 2: escritorio remoto](docs/02-escritorio-remoto.md)
    - [Fase 3: acceso desde fuera](docs/03-acceso-remoto.md)
    - [Fase 4: DNS con bloqueo de anuncios](docs/04-dns.md)
-   - Las siguientes fases, `docs/05-…` a `docs/08-…`, a medida que se hagan.
+   - [Fase 5: servicios](docs/05-servicios/README.md) (en curso)
+   - Las siguientes fases, `docs/06-…` a `docs/08-…`, a medida que se hagan.
 4. [`docs/decisiones/`](docs/decisiones/README.md): un ADR por decisión, con las alternativas descartadas.
 5. [`docs/guia-securizacion.md`](docs/guia-securizacion.md): qué se aplicó, adaptó o descartó de la guía de referencia.
 6. [`docs/lecciones-aprendidas.md`](docs/lecciones-aprendidas.md) y [`docs/entrevista.md`](docs/entrevista.md).

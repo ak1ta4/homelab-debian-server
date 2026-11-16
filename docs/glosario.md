@@ -10,11 +10,12 @@ Las guías nunca muestran valores reales. Usan estos marcadores; los valores de 
 | `<IP_PC>` | IP del PC principal (reserva DHCP). Es la IP de rescate que Fail2ban nunca bloquea |
 | `<IP_ROUTER>` | Puerta de enlace de la red de casa |
 | `<RED_LAN>` | Red de casa en notación CIDR, por ejemplo `x.x.x.0/24` |
+| `<RED_LAN_MASCARA>` | La misma red con la máscara escrita entera, `x.x.x.0/255.255.255.0`: es la forma que documenta `hosts allow` de Samba |
 | `<IP_SUMIDERO>` | IP de la LAN sin uso, fuera de los rangos DHCP. No se asigna nunca a ningún equipo |
 | `<IP_PUBLICA>` | IP pública de la conexión |
 | `<USUARIO_ADMIN>` | Cuenta administradora del servidor, la única en `sshusers` por ahora |
 | `<USUARIO_GITHUB>` | Usuario de GitHub dueño del repositorio |
-| `<USUARIO_WINDOWS>` | Usuario de Windows en el PC |
+| `<USUARIO_WINDOWS>` | Usuario de Windows en el PC. El usuario de Samba tiene el mismo nombre, pero otra contraseña |
 | `<IP_BLOQUEADA>` | IP que Fail2ban ha bloqueado, tal como sale en `fail2ban-client status sshd` |
 | `<ID_DISCO_DATOS>` | Nombre del disco de datos en `/dev/disk/by-id/`. Incluye el número de serie |
 | `<RANGO_PRIVADO_16>` | El rango privado `/16` de la RFC 1918 (el de los routers domésticos), entero. No identifica la casa, pero la regla de gitleaks que protege la IP de la LAN bloquea cualquier dirección de ese rango |

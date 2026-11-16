@@ -14,9 +14,9 @@ Cada decisión importante tiene un documento corto con su **contexto**, las **op
 | [0008](0008-docker-y-ufw.md) | Docker publica por defecto solo en el propio equipo; lo de la LAN, a propósito | Aceptada |
 | [0009](0009-tailscale.md) | Acceso desde fuera con Tailscale, sin tocar el router | Aceptada |
 | [0010](0010-dns-de-casa-con-adguard.md) | DNS de casa y de la tailnet con AdGuard, con respaldo público en casa | Aceptada |
+| [0011](0011-nube-con-syncthing-y-samba.md) | Nube con Syncthing del PC al servidor y Samba (espejo de solo lectura) | Aceptada |
 
 **Pendientes, en su fase:**
-- Syncthing frente a Nextcloud.
 - Conexión directa, Peer Relay o DERP.
 - LiveSync.
 - Caddy con DNS-01.
