@@ -123,6 +123,34 @@ Errores reales, con su causa y su solución. Se escribe mientras se trabaja, no 
 - **Solución:** `tailscale set --snat-subnet-routes=false`. El firewall ya veía la IP real, porque `DOCKER-USER` actúa antes del NAT de salida.
 - **Lección:** antes de dar una prueba por fallida, comprobar si la IP que falta aparece con otra cara.
 
+## Samba trajo un controlador de dominio y winbind al login
+
+- **Síntoma:** al instalar `samba` entraron 38 paquetes, entre ellos `samba-ad-dc`, `winbind`, `libpam-winbind` y `libnss-winbind`. Este último añadió `winbind` a `/etc/nsswitch.conf`, y `libpam-winbind` puso `pam_winbind` en todos los `/etc/pam.d/common-*`.
+- **Por qué importa:** `sudo` incluye `common-auth` y `common-account`, y el SSH incluye `common-account` y `common-session` (no `common-auth`). Un servicio que no hacía falta quedaba en la cadena de autenticación del servidor.
+- **Causa:** `samba-ad-dc` es un paquete *recomendado* de `samba`, y depende de `winbind`.
+- **Solución:** con una copia de `/etc/pam.d` y una sesión de root abierta, `apt-get purge` de esos cinco paquetes (antes, `apt-get -s` para comprobar que `samba` se quedaba). Sus scripts de desinstalación limpiaron PAM y `nsswitch`. Después, `sudo` y SSH probados en ventanas nuevas.
+- **Lección:** en un servidor, instalar con `--no-install-recommends` y leer la lista de paquetes **antes** de aceptar. Después de instalar, mirar si algo ha tocado `/etc/pam.d` o `/etc/nsswitch.conf`.
+
+## El iPhone veía la carpeta de red, pero no copiaba nada
+
+- **Síntoma:** desde la app Archivos, la carpeta compartida se veía, pero no se podía ni subir ni descargar. Windows funcionaba bien.
+- **Causa:** la app Archivos espera las extensiones SMB de Apple, que Samba no trae activadas.
+- **Solución:** `vfs objects = catia fruit streams_xattr` con `fruit:metadata = stream` en `[global]`, y `fruit:nfs_aces = no` para que el cliente no cambie permisos. Después, desconectar el servidor en el iPhone y **cerrar la app**: la sesión anterior seguía abierta sin `fruit`.
+- **Además:** al principio se intentó subir dentro de `pc`, que es de solo lectura a propósito. Antes de buscar un fallo, comprobar que se está probando en el sitio correcto.
+
+## Una carpeta "en uso" en Windows
+
+- **Síntoma:** `Move-Item` no podía mover la carpeta de Syncthing: "está en uso".
+- **Causas:** primero, la propia PowerShell estaba **dentro** de la carpeta. Después, Syncthing seguía abierto con dos procesos: un vigilante y el programa. Si se cierra el programa, el vigilante lo vuelve a abrir.
+- **Solución:** `cd $HOME`, `Stop-Process -Name syncthing -Force` (cierra los dos) y copiar con `Copy-Item -Recurse` en vez de mover.
+- **Lección:** antes de mover un programa en Windows, salir de su carpeta y comprobar con `Get-Process` que no queda nada en marcha.
+
+## Windows entra en la carpeta de red con su propio usuario
+
+- **Síntoma:** "La contraseña de red especificada no es correcta", sin haber escrito nada.
+- **Causa:** Windows prueba primero el usuario con el que inició sesión. Después, si hay una conexión con otras credenciales, da el error 1219.
+- **Solución:** `net use \\<IP_SERVIDOR>\pc /user:homelab\<usuario> *` (el `*` pide la contraseña sin mostrarla), y `net use * /delete /y` para cerrar las anteriores.
+
 ## El manual de una opción decía lo contrario de lo que hace
 
 - `google-authenticator -W` aparece en el manual como "desactivar la ventana de códigos", pero en modo TOTP el código fuente escribe `WINDOW_SIZE 3`: la ventana estándar (código anterior, actual y siguiente).
