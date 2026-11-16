@@ -174,6 +174,29 @@ Guía: [`04-dns.md`](04-dns.md). Decisión: [ADR 0010](decisiones/0010-dns-de-ca
   - Jellyfin sigue funcionando por Tailscale tras `--snat-subnet-routes=false`.
 - Pendiente: la prueba de reinicio.
 
+## Fase 5: servicios (en curso, desde 2026-11-16)
+
+Plan aprobado por el dueño:
+- **5.0** Dominio y Caddy (DNS-01 con Cloudflare). Aplazado hasta que el dueño compre el dominio.
+- **5.1** Monitorización: Beszel, Dozzle y Homepage como panel para acceder a todo. Incluye lo que quedó de la Fase 4: hoja imprimible para volver al DNS del router, registros de AdGuard 7 días y filtros más fuertes.
+- **5.2** Alertas por correo dedicado y bot de Telegram (avisos y consultas de una lista cerrada). La parte de hablar con una IA va a la Fase 7.
+- **5.3** Nube, **adelantada por el dueño**: Syncthing del PC al servidor, y Samba en solo lectura para el iPhone y el iPad. File Browser se descarta: está archivado desde el 2026-09-01.
+- **5.4** Traer archivos del PC (Wake-on-LAN). **5.5** Obsidian (necesita HTTPS). **5.6** Immich, después de la nube. **5.7** Descargas con ClamAV. **5.8** Auditoría: logwatch, rkhunter y AIDE.
+
+### 5.3 Nube
+
+- Syncthing `2.1.7` en Docker (2026-11-16):
+  - Usuario `syncthing` sin capacidades y `UMASK=027`.
+  - Datos en `/srv/datos/archivos/pc`; configuración en `/srv/syncthing/var`.
+  - `homelab-syncthing-lan.service`: el 22000 (TCP y UDP), desde `<RED_LAN>` y la tailnet; el panel 8384, solo desde `<IP_PC>` y la tailnet.
+  - **Comprobado:** arranca como `syncthing`, sin errores de permisos, y las reglas están encima de las de AdGuard y Jellyfin.
+- Pendiente:
+  - En el panel: contraseña, HTTPS, y quitar NAT, descubrimiento local y global, y relays. Al arrancar se unió a un relay público, porque viene activado de fábrica.
+  - Syncthing en el PC: Imágenes, Vídeos y Documentos (unos 100 GB), enviar solamente. Revisar el `.stignore` con el dueño.
+  - Versiones escalonadas en el servidor.
+  - Samba en solo lectura.
+  - Guía y stack en el repositorio.
+
 ## Pendiente de verificar
 
 - Las reservas DHCP, en el próximo reinicio de cada equipo.
