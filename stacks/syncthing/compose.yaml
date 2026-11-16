@@ -1,0 +1,22 @@
+# Homelab: Syncthing. Los valores de este equipo están en .env, al lado.
+services:
+  syncthing:
+    image: syncthing/syncthing:2.1.7
+    container_name: syncthing
+    hostname: homelab
+    user: "${SYNCTHING_UID}:${SYNCTHING_GID}"
+    environment:
+      - UMASK=027  # archivos 640 y carpetas 750: el grupo puede leer
+    ports:
+      # Todas las IPv4; el origen se limita en DOCKER-USER.
+      - "0.0.0.0:22000:22000/tcp"
+      - "0.0.0.0:22000:22000/udp"
+      - "0.0.0.0:8384:8384/tcp"  # panel (PC y tailnet)
+    volumes:
+      - ./var:/var/syncthing
+      - /srv/datos/archivos/pc:/datos
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped

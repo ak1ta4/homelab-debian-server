@@ -1,0 +1,30 @@
+// Homelab: lo que no sale del PC
+(?d)desktop.ini
+(?d)Thumbs.db
+// Enlaces de Windows a otras carpetas
+/Mi música
+/Mis imágenes
+/Mis vídeos
+// Perfiles y juegos
+/Restore Firefox
+/League of Legends
+/My Games
+// Secretos, en cualquier subcarpeta
+.env
+.env.*
+.credentials*
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
+.ssh
+.aws
+.netrc
+// Dependencias y cachés
+node_modules
+.venv
+venv
+__pycache__
+.cache
