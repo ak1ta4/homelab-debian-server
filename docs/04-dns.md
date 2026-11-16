@@ -216,7 +216,7 @@ tailscale debug prefs | grep -E '"CorpDNS"|"NoSNAT"'
 - [x] Tras el cambio del router, cuatro dispositivos de casa aparecen en el panel y se bloquean dominios de publicidad.
 - [x] La red de casa no tiene IPv6 global (solo `fe80::`), así que nadie se salta AdGuard por un DNS IPv6 del router.
 - [x] iPhone con datos y Tailscale: las consultas llegan a AdGuard con su IP `100.x` y se bloquean dominios.
-- [ ] Jellyfin desde el iPhone por Tailscale tras `--snat-subnet-routes=false`.
+- [x] Jellyfin sigue funcionando desde el iPhone por Tailscale tras `--snat-subnet-routes=false`.
 - [ ] Tras un reinicio: las reglas vuelven y AdGuard arranca. En la sesión en persona.
 
 ## 6. Errores frecuentes

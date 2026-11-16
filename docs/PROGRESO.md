@@ -171,9 +171,8 @@ Guía: [`04-dns.md`](04-dns.md). Decisión: [ADR 0010](decisiones/0010-dns-de-ca
   - Sin IPv6 global en la LAN.
   - El iPhone con datos y Tailscale llega con su IP `100.x`.
   - El servidor y el agente siguen resolviendo.
-- Pendiente:
-  - Jellyfin por Tailscale tras `--snat-subnet-routes=false`.
-  - La prueba de reinicio.
+  - Jellyfin sigue funcionando por Tailscale tras `--snat-subnet-routes=false`.
+- Pendiente: la prueba de reinicio.
 
 ## Pendiente de verificar
 
