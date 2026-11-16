@@ -155,6 +155,26 @@ Guía: [`03-acceso-remoto.md`](03-acceso-remoto.md). Decisión: [ADR 0009](decis
   - La prueba de reinicio.
   - Tailnet Lock, como mejora.
 
+## Fase 4: DNS con AdGuard (2026-11-15 y 2026-11-16)
+
+Guía: [`04-dns.md`](04-dns.md). Decisión: [ADR 0010](decisiones/0010-dns-de-casa-con-adguard.md). Solo AdGuard por decisión del dueño; Caddy, HTTPS y el dominio, aplazados.
+
+- AdGuard Home `v0.107.80` en Docker ([stack](../stacks/adguard/README.md)): usuario `adguard`, sin capacidades salvo `NET_BIND_SERVICE` (el binario lleva `setcap`), DNS en 5353 y panel en 3000 dentro; publicado `53→5353` y `3000` en `0.0.0.0`.
+- `DOCKER-USER` (`homelab-adguard-lan.service`): DNS desde `<RED_LAN>` y la tailnet por `tailscale0`; panel solo desde `<RED_LAN>`. Con `--ctstate DNAT`, para no bloquear la salida del contenedor.
+- DoH a Quad9 y Cloudflare, bootstrap `9.9.9.9` y `1.1.1.1`, solicitudes paralelas y DNSSEC.
+- El servidor fija sus DNS en los del operador (`ipv4.ignore-auto-dns`), por el filtro del agente.
+- Router (2026-11-16): pool DHCP de casa con `<IP_SERVIDOR>` y `9.9.9.9` de respaldo. Los pools del decodificador (`[IAL]`) y de Telefónica (`TEF_IOT`), sin tocar.
+- Tailscale (2026-11-16): `udp:53` y `tcp:53` en la política, el servidor como nameserver global con *Override DNS servers*, y `--snat-subnet-routes=false`.
+- **Comprobado:**
+  - Desde el PC, `ad.doubleclick.net` da `0.0.0.0`.
+  - Cuatro dispositivos de casa en el panel, con dominios bloqueados.
+  - Sin IPv6 global en la LAN.
+  - El iPhone con datos y Tailscale llega con su IP `100.x`.
+  - El servidor y el agente siguen resolviendo.
+- Pendiente:
+  - Jellyfin por Tailscale tras `--snat-subnet-routes=false`.
+  - La prueba de reinicio.
+
 ## Pendiente de verificar
 
 - Las reservas DHCP, en el próximo reinicio de cada equipo.

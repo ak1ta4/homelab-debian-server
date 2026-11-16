@@ -20,7 +20,8 @@ Las guías nunca muestran valores reales. Usan estos marcadores; los valores de 
 | `<RANGO_PRIVADO_16>` | El rango privado `/16` de la RFC 1918 (el de los routers domésticos), entero. No identifica la casa, pero la regla de gitleaks que protege la IP de la LAN bloquea cualquier dirección de ese rango |
 | `<UUID_DATOS>` | UUID del sistema de archivos btrfs del disco de datos (`lsblk -o NAME,UUID`) |
 | `<IP_TAILSCALE_SERVIDOR>` | IP del servidor en la tailnet (`100.x.y.z`) |
-| `<DOMINIO>` | Dominio propio (Fase 4) |
+| `<DOMINIO>` | Dominio propio (aplazado) |
+| `<DNS_OPERADOR>` | Los dos DNS del operador, separados por coma, tal como los repartía el router |
 | `<RED_LAN_REGEX>`, `<IP_PUBLICA_REGEX>`, `<OTROS_NOMBRES>` | Valores reales escritos como expresión regular, solo en la configuración local de gitleaks |
 | `AAAAMMDD` | Fecha del día en las copias de seguridad, por ejemplo `20261108` |
 

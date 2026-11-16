@@ -47,6 +47,8 @@ En el panel de Tailscale, **Access controls** → **JSON editor**, sustituyendo 
 ```
 Sin la regla por defecto, que lo permite todo, los dispositivos personales no se ven entre ellos; solo llegan al servidor.
 
+En la [Fase 4](04-dns.md#47-tailscale-adguard-también-fuera-de-casa) se añaden `"udp:53", "tcp:53"` a la lista `ip`, para el DNS.
+
 ### 4.2 Instalar en el servidor
 
 Clave del repositorio: `2596 A99E AAB3 3821 893C 0A79 458C A832 957F 5868`, la misma en `pkgs.tailscale.com`, `keyserver.ubuntu.com` y `keys.openpgp.org`. También firma el `InRelease` de `trixie`.

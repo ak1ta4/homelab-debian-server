@@ -101,6 +101,28 @@ Errores reales, con su causa y su solución. Se escribe mientras se trabaja, no 
 - **Causa:** el `*` lo expande la shell de tu usuario **antes** de `sudo`. Sin permiso para leer la carpeta, no se expande y `cat` recibe el `*` literal.
 - **Solución:** `sudo sh -c 'cat /carpeta/archivo*.json'`, o el nombre completo.
 
+## AdGuard no arrancaba con `cap_drop: ALL`
+
+- **Síntoma:** el contenedor se reiniciaba sin parar con `exec /opt/adguardhome/AdGuardHome: operation not permitted`.
+- **Causa:** el Dockerfile de la imagen marca el binario con `setcap cap_net_bind_service=+eip`. Si el archivo pide una capacidad que no está en el conjunto límite del contenedor, el núcleo se niega a ejecutarlo.
+- **Solución:** `cap_add: NET_BIND_SERVICE`. Con un usuario sin privilegios y `no-new-privileges`, el proceso no llega a tenerla.
+- **Después:** en el primer arranque, AdGuard exigía root (`checkNetworkPermissions`, en su código). El asistente se hizo como root y después se volvió al usuario `adguard`.
+- **Lección:** con `cap_drop: ALL`, mirar si la imagen tiene binarios con `setcap` (`getcap`).
+
+## Una regla de entrada que bloqueaba la salida del contenedor
+
+- **Síntoma:** en AdGuard, "Probar servidores de subida" fallaba, y los filtros no se descargaban.
+- **Causa:** la regla `DOCKER-USER` "puerto original 53 y origen fuera de la LAN → `DROP`" también cazaba las consultas del contenedor a `9.9.9.9:53`. Esa salida pasa por `FORWARD`, su puerto original también es 53 y su origen es la red de Docker, no la LAN.
+- **Solución:** añadir `--ctstate DNAT` para filtrar solo lo que entra por un puerto publicado. Después, `docker restart adguard` descargó los filtros.
+- **Lección:** en `FORWARD` pasa el tráfico en las dos direcciones. Una regla por puerto tiene que distinguir entrada y salida.
+
+## Las consultas de la tailnet llegaban como `172.19.0.1`
+
+- **Síntoma:** con el DNS de Tailscale apuntando al servidor, AdGuard no mostraba la IP `100.x` del iPhone, sino la puerta de su red Docker.
+- **Causa:** Tailscale marca lo que reenvía desde `tailscale0` y le hace NAT a la salida (`NoSNAT: false`). El tráfico hacia un contenedor se reenvía, así que también se le aplica.
+- **Solución:** `tailscale set --snat-subnet-routes=false`. El firewall ya veía la IP real, porque `DOCKER-USER` actúa antes del NAT de salida.
+- **Lección:** antes de dar una prueba por fallida, comprobar si la IP que falta aparece con otra cara.
+
 ## El manual de una opción decía lo contrario de lo que hace
 
 - `google-authenticator -W` aparece en el manual como "desactivar la ventana de códigos", pero en modo TOTP el código fuente escribe `WINDOW_SIZE 3`: la ventana estándar (código anterior, actual y siguiente).

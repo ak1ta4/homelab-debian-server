@@ -30,3 +30,4 @@ El dueño quiere usar SSH, Moonlight y Jellyfin fuera de casa. Ningún servicio 
 - Con el DNS de Tailscale, el agente se queda sin DNS: su filtro de salida ([ADR 0007](0007-filtro-de-salida-del-agente.md)) bloquea `100.64.0.0/10`. Ocurrió al conectar y se corrigió con `tailscale set --accept-dns=false`.
 - Riesgo que queda: quien controle la cuenta de Tailscale puede añadir dispositivos a la tailnet. Mitigación: la cuenta con verificación en dos pasos. Tailnet Lock queda como mejora (exige dos nodos firmantes).
 - Si el dueño invita a otra persona a la tailnet, `autogroup:member` le daría el mismo acceso: habría que revisar la política.
+- **Actualización (2026-11-16):** la política añade DNS (`udp:53` y `tcp:53`) hacia el servidor, que es el nameserver de la tailnet, y el servidor usa `--snat-subnet-routes=false` ([ADR 0010](0010-dns-de-casa-con-adguard.md)).
