@@ -206,6 +206,29 @@ Guía: [`05-servicios/03-nube.md`](05-servicios/03-nube.md). Decisión: [ADR 001
   - iPhone en casa y por la tailnet: sube y descarga.
 - Pendiente: la prueba de reinicio. `UMASK=027` no se aplica (sin efecto, por el `750` de la carpeta).
 
+### 5.6 Fotos con Immich (2026-11-17)
+
+Guía: [`05-servicios/06-fotos.md`](05-servicios/06-fotos.md). Decisión: [ADR 0012](decisiones/0012-fotos-con-immich.md).
+
+- Immich `v3.4.1` en Docker ([stack](../stacks/immich/README.md)):
+  - Los cuatro contenedores como `immich`, `cap_drop: ALL` y `no-new-privileges`.
+  - Base de datos en el NVMe; lo subido, en `/srv/datos/immich`.
+- Imágenes del PC como biblioteca externa `:ro` (con `group_add` de `syncthing`), sin la carpeta de Manga. IA en la CPU.
+- `homelab-immich-lan.service`: el 2283 desde `<RED_LAN>` y la tailnet. `"tcp:2283"` en la política de Tailscale.
+- iPhone:
+  - app con subida manual y cambio automático de URL según el wifi;
+  - Tailscale con VPN On Demand (desconecta en el wifi de casa).
+- **Comprobado:**
+  - `pong` y los cuatro contenedores con el usuario `immich`.
+  - `immich` no puede escribir en las imágenes del PC.
+  - La biblioteca está escaneada.
+  - App en casa sin VPN y fuera por la tailnet.
+- Primer procesado de la IA: carga de 12 a 26 con 12 hilos (a la 01:48 del 2026-11-17). El dueño lo deja con la concurrencia por defecto.
+- Pendiente:
+  - Que terminen los trabajos.
+  - La prueba de reinicio.
+  - No borrar fotos del iPhone hasta la Fase 6.
+
 ## Pendiente de verificar
 
 - Las reservas DHCP, en el próximo reinicio de cada equipo.

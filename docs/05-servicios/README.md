@@ -10,7 +10,7 @@ Los servicios del día a día sobre la base de las fases anteriores. Nada se exp
 | 3. Nube: Syncthing del PC al servidor y Samba | [`03-nube.md`](03-nube.md) | Hecho. Falta la prueba de reinicio |
 | 4. Traer archivos del PC (Wake-on-LAN) | — | Pendiente |
 | 5. Obsidian con LiveSync | — | Pendiente (necesita HTTPS) |
-| 6. Immich | — | Pendiente |
+| 6. Fotos con Immich | [`06-fotos.md`](06-fotos.md) | Hecho. Falta que termine el primer procesado y la prueba de reinicio |
 | 7. Descargas con ClamAV | — | Pendiente |
 | 8. Auditoría: logwatch, rkhunter y AIDE | — | Pendiente |
 

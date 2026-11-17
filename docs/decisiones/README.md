@@ -15,6 +15,7 @@ Cada decisión importante tiene un documento corto con su **contexto**, las **op
 | [0009](0009-tailscale.md) | Acceso desde fuera con Tailscale, sin tocar el router | Aceptada |
 | [0010](0010-dns-de-casa-con-adguard.md) | DNS de casa y de la tailnet con AdGuard, con respaldo público en casa | Aceptada |
 | [0011](0011-nube-con-syncthing-y-samba.md) | Nube con Syncthing del PC al servidor y Samba (espejo de solo lectura) | Aceptada |
+| [0012](0012-fotos-con-immich.md) | Fotos con Immich sin root, IA en CPU y las fotos del PC en solo lectura | Aceptada |
 
 **Pendientes, en su fase:**
 - Conexión directa, Peer Relay o DERP.
