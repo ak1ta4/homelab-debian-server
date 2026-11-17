@@ -5,6 +5,7 @@ theme: dark
 color: stone  # sus variables se sustituyen en custom.css
 headerStyle: boxedWidgets
 hideVersion: true
+statusStyle: dot
 useEqualHeights: true
 target: _blank
 layout:
@@ -20,6 +21,10 @@ layout:
     style: row
     columns: 2
     icon: mdi-lan
+  Monitorización:
+    style: row
+    columns: 2
+    icon: mdi-chart-line
   Enlaces:
     style: row
     columns: 3

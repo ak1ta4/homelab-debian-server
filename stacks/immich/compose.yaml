@@ -30,6 +30,9 @@ services:
     depends_on:
       - redis
       - database
+    networks:
+      - default
+      - panel
     healthcheck:
       disable: false
 
@@ -69,3 +72,7 @@ services:
     shm_size: 128mb
     healthcheck:
       disable: false
+
+networks:
+  panel:
+    external: true  # la crea fase-5-red-panel.sh

@@ -19,4 +19,11 @@ services:
       - NET_BIND_SERVICE  # solo para poder ejecutar el binario (setcap)
     security_opt:
       - no-new-privileges:true
+    networks:
+      - default
+      - panel
     restart: unless-stopped
+
+networks:
+  panel:
+    external: true  # la crea fase-5-red-panel.sh

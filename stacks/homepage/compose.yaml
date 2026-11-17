@@ -8,14 +8,25 @@ services:
       # Nombres con los que se puede abrir (puerto 80: sin número).
       HOMEPAGE_ALLOWED_HOSTS: ${HOMEPAGE_ALLOWED_HOSTS}
       LOG_TARGETS: stdout
+      HOMEPAGE_FILE_IMMICH: /app/secretos/immich
+      HOMEPAGE_FILE_JELLYFIN: /app/secretos/jellyfin
+      HOMEPAGE_FILE_ADGUARD: /app/secretos/adguard
     ports:
       # Todas las IPv4; el origen se limita en DOCKER-USER.
       - "0.0.0.0:80:3000/tcp"
     volumes:
       - ./config:/app/config
+      - ./secretos:/app/secretos:ro  # claves de API (700)
       - /srv/datos:/mnt/datos:ro  # solo para ver el espacio libre
     cap_drop:
       - ALL
     security_opt:
       - no-new-privileges:true
+    networks:
+      - default
+      - panel
     restart: unless-stopped
+
+networks:
+  panel:
+    external: true  # la crea fase-5-red-panel.sh
