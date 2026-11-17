@@ -40,7 +40,7 @@ sudo curl -fsSL -o /etc/apt/keyrings/lizardbyte-stable.asc https://dl.cloudsmith
 ```bash
 gpg --show-keys --with-fingerprint /etc/apt/keyrings/lizardbyte-stable.asc
 ```
-✅ La huella de arriba. Si no coincide, borra el archivo y no sigas.
+**Resultado:** La huella de arriba. Si no coincide, borra el archivo y no sigas.
 
 `/etc/apt/sources.list.d/lizardbyte-stable.sources`:
 ```
@@ -75,11 +75,11 @@ sudo apt update
 ```bash
 apt-cache policy sunshine
 ```
-✅ La versión instalada aparece también en `dl.cloudsmith.io` con prioridad 500.
+**Resultado:** La versión instalada aparece también en `dl.cloudsmith.io` con prioridad 500.
 ```bash
 sudo unattended-upgrade --dry-run --debug 2>&1 | grep "Allowed origins"
 ```
-✅ Incluye `origin=cloudsmith/lizardbyte/stable,codename=trixie`.
+**Resultado:** Incluye `origin=cloudsmith/lizardbyte/stable,codename=trixie`.
 
 Tras una actualización de Sunshine, el servicio sigue con el binario viejo hasta reiniciarse: `needrestart` lo avisa y el reinicio llega con la sesión siguiente.
 
@@ -88,7 +88,7 @@ Tras una actualización de Sunshine, el servicio sigue con el binario viejo hast
 ```bash
 grep -vE '^\s*(#|$)' ~/.config/sunshine/sunshine.conf
 ```
-✅ Solo `capture = kms`, `encoder = vaapi` y `adapter_name = /dev/dri/renderD128`. Las credenciales están en `sunshine_state.json`, que nunca se muestra.
+**Resultado:** Solo `capture = kms`, `encoder = vaapi` y `adapter_name = /dev/dri/renderD128`. Las credenciales están en `sunshine_state.json`, que nunca se muestra.
 
 ### 4.3 Clientes emparejados
 

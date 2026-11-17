@@ -31,7 +31,7 @@ Decisión y alternativas: [ADR 0011](../decisiones/0011-nube-con-syncthing-y-sam
   ```bash
   sudo ss -lntup | grep -E ':(22000|8384|21027|139|445) '
   ```
-  ✅ Vacío.
+  **Resultado:** Vacío.
 
 ## 4. Pasos
 
@@ -90,7 +90,7 @@ sudo docker compose -f /srv/syncthing/compose.yaml up -d
 ```bash
 sudo docker top syncthing -o user,pid,args
 ```
-✅ El proceso con el UID de `syncthing`.
+**Resultado:** El proceso con el UID de `syncthing`.
 
 El navegador del **propio servidor** también entra en el panel: lo que sale del mismo equipo no pasa por `FORWARD`.
 
@@ -101,11 +101,11 @@ El navegador del **propio servidor** también entra en el panel: lo que sale del
 2. **Acciones → Ajustes → GUI:** usuario y contraseña (en el gestor de contraseñas) y **Usar HTTPS para la GUI**. El aviso naranja ("la dirección la fija una opción de arranque") es normal: la imagen fija `0.0.0.0:8384`.
 3. **Conexiones:** desmarca **NAT traversal**, **Descubrimiento local**, **Descubrimiento global** y **Relays**. Guarda.
 
-✅ Sin aviso rojo, **Oyentes 2/2** (TCP y QUIC; con relay serían 3/3) y, desde el servidor:
+**Resultado:** Sin aviso rojo, **Oyentes 2/2** (TCP y QUIC; con relay serían 3/3) y, desde el servidor:
 ```bash
 curl -sk -o /dev/null -w '%{http_code}\n' https://127.0.0.1:8384/rest/system/status
 ```
-✅ `403`: responde por HTTPS y sin credenciales no deja pasar.
+**Resultado:** `403`: responde por HTTPS y sin credenciales no deja pasar.
 
 **Syncthing en Windows** (no hay instalador oficial). En PowerShell, sin administrador:
 1. Descarga de la [última versión](https://github.com/syncthing/syncthing/releases/latest) `syncthing-windows-amd64-v2.X.Y.zip` y comprueba su hash contra `sha256sum.txt.asc`, de la misma versión:
@@ -124,18 +124,18 @@ curl -sk -o /dev/null -w '%{http_code}\n' https://127.0.0.1:8384/rest/system/sta
    $s.Save()
    Start-Process "$ini\Syncthing.lnk"
    ```
-   ✅ `Get-Process syncthing` muestra **dos** procesos: el vigilante y el programa.
+   **Resultado:** `Get-Process syncthing` muestra **dos** procesos: el vigilante y el programa.
 4. En `127.0.0.1:8384`, lo mismo que en el servidor: usuario y contraseña **distintos**, HTTPS, sin **Iniciar navegador** y las cuatro opciones de **Conexiones** desmarcadas.
 5. **Sin reglas en el firewall de Windows:** el PC solo llama hacia fuera.
    ```
    Get-NetFirewallRule -DisplayName *syncthing*
    ```
-   ✅ Nada.
+   **Resultado:** Nada.
 
 **Emparejar:**
 - En el PC, **Añadir dispositivo remoto** con el ID del servidor (**Acciones → Mostrar ID**) y, en **Avanzado → Direcciones**, `tcp://<IP_SERVIDOR>:22000`.
 - En el servidor, acepta el aviso del PC comprobando el principio de su ID. Deja **Direcciones** en `dynamic`: con el descubrimiento apagado, el servidor nunca llama al PC.
-- ✅ Al cabo de un minuto, más o menos: **Conectado (Sin uso)** en los dos lados.
+- **Resultado:** Al cabo de un minuto, más o menos: **Conectado (Sin uso)** en los dos lados.
 
 **Carpetas**, una a una ([tabla del stack](../../stacks/syncthing/README.md#carpetas)):
 - **En el PC:** **Añadir carpeta**, con su ID, su ruta, compartida con el servidor y **Enviar solamente**. En **Patrones a ignorar**:
@@ -165,7 +165,7 @@ curl -sk -o /dev/null -w '%{http_code}\n' https://127.0.0.1:8384/rest/system/sta
    ```bash
    grep -n winbind /etc/pam.d/common-* /etc/nsswitch.conf
    ```
-   ✅ Nada, y `smbd` sigue `active`. Después, `sudo` y SSH probados en ventanas nuevas.
+   **Resultado:** Nada, y `smbd` sigue `active`. Después, `sudo` y SSH probados en ventanas nuevas.
 2. Parar y apagar NetBIOS:
    ```bash
    sudo systemctl stop smbd
@@ -180,7 +180,7 @@ curl -sk -o /dev/null -w '%{http_code}\n' https://127.0.0.1:8384/rest/system/sta
    ```bash
    sudo testparm -s
    ```
-   ✅ `Loaded services file OK`, `ROLE_STANDALONE`, y `[pc]` y `[subidas]`.
+   **Resultado:** `Loaded services file OK`, `ROLE_STANDALONE`, y `[pc]` y `[subidas]`.
 4. Usuario de Samba, del sistema, sin shell, en el grupo `syncthing`, y la carpeta `subidas`:
    ```bash
    sudo adduser --system --group --no-create-home --home /nonexistent --shell /usr/sbin/nologin <USUARIO_WINDOWS>
@@ -195,7 +195,7 @@ curl -sk -o /dev/null -w '%{http_code}\n' https://127.0.0.1:8384/rest/system/sta
    ```bash
    sudo -u <USUARIO_WINDOWS> touch /srv/datos/archivos/pc/.prueba
    ```
-   ✅ `Permission denied`. Y en `subidas`, el mismo `touch` funciona.
+   **Resultado:** `Permission denied`. Y en `subidas`, el mismo `touch` funciona.
 5. Contraseña de Samba, propia (no la de Windows), en el gestor de contraseñas:
    ```bash
    sudo smbpasswd -a <USUARIO_WINDOWS>
@@ -215,7 +215,7 @@ curl -sk -o /dev/null -w '%{http_code}\n' https://127.0.0.1:8384/rest/system/sta
    ```bash
    sudo ss -ltnp | grep -E ':(139|445) '
    ```
-   ✅ Solo el 445, de `smbd`.
+   **Resultado:** Solo el 445, de `smbd`.
 
 **Conectarse:**
 - **Windows:** con el usuario de Samba, no con el de Windows.

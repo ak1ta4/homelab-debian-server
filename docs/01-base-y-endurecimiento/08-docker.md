@@ -88,14 +88,14 @@ Docker arranca solo y queda habilitado. **No** añadas tu usuario al grupo `dock
 ```bash
 sudo dockerd --validate --config-file /etc/docker/daemon.json
 ```
-✅ `configuration OK`.
+**Resultado:** `configuration OK`.
 ```bash
 sudo systemctl restart docker
 ```
 ```bash
 sudo docker info --format 'logs={{.LoggingDriver}} live-restore={{.LiveRestoreEnabled}}'
 ```
-✅ `logs=local live-restore=true`.
+**Resultado:** `logs=local live-restore=true`.
 
 ### 4.4 Actualizaciones automáticas
 
@@ -110,7 +110,7 @@ La lista se **suma** a los orígenes de Debian, no los sustituye:
 ```bash
 sudo unattended-upgrade --dry-run --debug 2>&1 | grep "Allowed origins"
 ```
-✅ Los tres orígenes de Debian y `origin=Docker,label=Docker CE,codename=trixie`.
+**Resultado:** Los tres orígenes de Debian y `origin=Docker,label=Docker CE,codename=trixie`.
 
 ### 4.5 Prueba
 
@@ -120,7 +120,7 @@ sudo docker run -d --name prueba-homelab -p 8088:8080 busybox httpd -f -p 8080
 ```bash
 ss -tlnH 'sport = :8088'
 ```
-✅ `127.0.0.1:8088`, y **no** `0.0.0.0:8088`.
+**Resultado:** `127.0.0.1:8088`, y **no** `0.0.0.0:8088`.
 ```bash
 sudo docker rm -f prueba-homelab
 ```

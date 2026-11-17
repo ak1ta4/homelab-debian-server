@@ -67,7 +67,7 @@ Unattended-Upgrade::Automatic-Reboot-Time "now";
 ```bash
 sudo unattended-upgrade --dry-run --debug
 ```
-✅ `Allowed origins are:` con los tres orígenes de Debian, y nada instalado.
+**Resultado:** `Allowed origins are:` con los tres orígenes de Debian, y nada instalado.
 
 ### 4.3 GNOME Software, sin descargas automáticas
 
@@ -78,7 +78,7 @@ gsettings set org.gnome.software download-updates false
 ```bash
 gsettings get org.gnome.software download-updates
 ```
-✅ `false`. GNOME Software sigue sirviendo para instalar a mano.
+**Resultado:** `false`. GNOME Software sigue sirviendo para instalar a mano.
 
 ### 4.4 Bloqueo al entrar
 
@@ -120,7 +120,7 @@ AutomaticLogin = <USUARIO_ADMIN>
 ```bash
 diff /etc/gdm3/daemon.conf.bak-AAAAMMDD /etc/gdm3/daemon.conf
 ```
-✅ Solo esas dos líneas. **No reinicies GDM**, porque cerraría la sesión gráfica: el cambio se aplica en el próximo arranque.
+**Resultado:** Solo esas dos líneas. **No reinicies GDM**, porque cerraría la sesión gráfica: el cambio se aplica en el próximo arranque.
 
 ## 5. Verificación
 

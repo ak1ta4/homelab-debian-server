@@ -33,7 +33,7 @@ Decisión y alternativas: [ADR 0010](decisiones/0010-dns-de-casa-con-adguard.md)
   ```bash
   sudo ss -lunpt 'sport = :53'
   ```
-  ✅ Vacío.
+  **Resultado:** Vacío.
 
 ## 4. Pasos
 
@@ -88,7 +88,7 @@ sudo systemctl enable --now homelab-adguard-lan.service
 ```bash
 sudo iptables -S DOCKER-USER
 ```
-✅ Los dos `RETURN` con `tailscale0`, después los tres `DROP` y, más abajo, las reglas de Jellyfin.
+**Resultado:** Los dos `RETURN` con `tailscale0`, después los tres `DROP` y, más abajo, las reglas de Jellyfin.
 
 ### 4.3 Primer arranque y asistente
 
@@ -119,7 +119,7 @@ En el **primer** arranque, sin configuración, AdGuard exige ser root o tener `C
    ```bash
    sudo docker top adguard -o user,pid,args
    ```
-   ✅ El proceso con el UID de `adguard`, no `root`. Con configuración ya creada, no repite la comprobación.
+   **Resultado:** El proceso con el UID de `adguard`, no `root`. Con configuración ya creada, no repite la comprobación.
 
 ### 4.4 Ajustes de AdGuard
 
@@ -133,7 +133,7 @@ En el **primer** arranque, sin configuración, AdGuard exige ser root o tener `C
 - **Servidores DNS de arranque** (bootstrap), sustituyendo también los que trae: `9.9.9.9` y `1.1.1.1`.
 - **Habilitar DNSSEC**.
 
-Pulsa **Probar servidores de subida**: ✅ los dos en verde. Guarda.
+Pulsa **Probar servidores de subida**. **Resultado:** los dos en verde. Guarda.
 
 **Filtros** → **Listas de bloqueo DNS**: la *AdGuard DNS filter* que trae. Si la lista sale sin reglas, reinicia el contenedor:
 ```bash
@@ -144,7 +144,7 @@ Prueba desde el PC, preguntando directamente al servidor:
 ```
 nslookup ad.doubleclick.net <IP_SERVIDOR>
 ```
-✅ `0.0.0.0`. Y `nslookup debian.org <IP_SERVIDOR>` da su IP real.
+**Resultado:** `0.0.0.0`. Y `nslookup debian.org <IP_SERVIDOR>` da su IP real.
 
 ### 4.5 El servidor no usa AdGuard
 
@@ -164,7 +164,7 @@ sudo nmcli device reapply eno1
 ```bash
 grep nameserver /etc/resolv.conf
 ```
-✅ Los mismos DNS que antes, y `getent hosts debian.org` resuelve.
+**Resultado:** Los mismos DNS que antes, y `getent hosts debian.org` resuelve.
 
 ### 4.6 Router: DNS para toda la casa
 
@@ -205,7 +205,7 @@ El servidor sigue con `--accept-dns=false`:
 ```bash
 tailscale debug prefs | grep -E '"CorpDNS"|"NoSNAT"'
 ```
-✅ `"CorpDNS": false` y `"NoSNAT": true`. `/etc/resolv.conf`, sin cambios.
+**Resultado:** `"CorpDNS": false` y `"NoSNAT": true`. `/etc/resolv.conf`, sin cambios.
 
 ## 5. Verificación
 

@@ -91,7 +91,7 @@ sudo systemctl enable --now homelab-jellyfin-lan.service
 ```bash
 sudo iptables -S DOCKER-USER
 ```
-✅ La regla con `DROP`. Solo entonces:
+**Resultado:** La regla con `DROP`. Solo entonces:
 ```bash
 sudo docker compose -f /srv/jellyfin/compose.yaml up -d
 ```

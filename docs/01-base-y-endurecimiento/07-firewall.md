@@ -83,7 +83,7 @@ Si algo falla, no toques nada: a los 5 minutos UFW se apaga solo.
 ```bash
 sudo ufw status verbose
 ```
-✅ `Status: active`, `deny (incoming)` y las cuatro reglas.
+**Resultado:** `Status: active`, `deny (incoming)` y las cuatro reglas.
 
 ### Parte B: filtro de salida del agente
 
@@ -145,7 +145,7 @@ table inet agente_salida {
 ```bash
 sudo nft -c -f /etc/homelab/agente-salida.nft
 ```
-✅ Sin salida: la sintaxis es correcta.
+**Resultado:** Sin salida: la sintaxis es correcta.
 
 #### B.2 Cargarlo en cada arranque
 

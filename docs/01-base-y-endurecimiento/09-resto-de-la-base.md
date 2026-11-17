@@ -83,7 +83,7 @@ sudo systemctl stop ssh-algoritmos-rescate.timer
 ```bash
 ssh-audit -l warn localhost
 ```
-✅ Sin avisos ni fallos; solo una nota informativa sobre Terrapin (`chacha20-poly1305`), que ya protege el intercambio estricto de OpenSSH.
+**Resultado:** Sin avisos ni fallos; solo una nota informativa sobre Terrapin (`chacha20-poly1305`), que ya protege el intercambio estricto de OpenSSH.
 
 **Termius** (iPhone y iPad) no entra con esta configuración: negocia la clave ECDSA y corta antes de autenticarse, incluso tras borrar su *known host*. El dueño decidió aplicarlo igualmente y revisarlo más adelante. Para devolverle el acceso bastaría con añadir `ecdsa-sha2-nistp256` al final de `HostKeyAlgorithms`.
 
@@ -125,7 +125,7 @@ install tipc /bin/false
 ```bash
 modprobe -n -v dccp
 ```
-✅ `install /bin/false`.
+**Resultado:** `install /bin/false`.
 
 ### 4.4 Hora con chrony y NTS
 
@@ -153,11 +153,11 @@ sudo systemctl restart chrony
 ```bash
 sudo chronyc -N authdata
 ```
-✅ Todas con `NTS` en `Mode` y `8` en `Cook`.
+**Resultado:** Todas con `NTS` en `Mode` y `8` en `Cook`.
 ```bash
 chronyc -N sources
 ```
-✅ Una marcada con `^*`; y en `chronyc tracking`, `Leap status : Normal`.
+**Resultado:** Una marcada con `^*`; y en `chronyc tracking`, `Leap status : Normal`.
 
 Restos del paquete retirado (opcional): `sudo dpkg --purge systemd-timesyncd`.
 

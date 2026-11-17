@@ -29,7 +29,7 @@ Decisión y alternativas: [ADR 0012](../decisiones/0012-fotos-con-immich.md).
   ```bash
   /lib64/ld-linux-x86-64.so.2 --help | grep x86-64-v2
   ```
-  ✅ `x86-64-v2 (supported, searched)`.
+  **Resultado:** `x86-64-v2 (supported, searched)`.
 - Base de datos en disco local y rápido: `/` es ext4 en el NVMe.
 
 ## 4. Pasos
@@ -54,7 +54,7 @@ Prueba: con el grupo `syncthing`, `immich` lee las imágenes del PC y no puede e
 ```bash
 sudo -u immich -g syncthing touch /srv/datos/archivos/pc/imagenes/.prueba
 ```
-✅ `Permission denied`.
+**Resultado:** `Permission denied`.
 
 Copia [`compose.yaml`](../../stacks/immich/compose.yaml) en `/srv/immich/` y crea `.env` (permisos `600`) a partir de [`.env.example`](../../stacks/immich/.env.example), con una contraseña aleatoria:
 ```bash
@@ -95,11 +95,11 @@ sudo docker compose -f /srv/immich/compose.yaml up -d
 ```bash
 curl -s http://127.0.0.1:2283/api/server/ping
 ```
-✅ `{"res":"pong"}`. Para ver el usuario de cada contenedor (`docker top` necesita la columna PID):
+**Resultado:** `{"res":"pong"}`. Para ver el usuario de cada contenedor (`docker top` necesita la columna PID):
 ```bash
 sudo docker top immich_postgres -o pid,user
 ```
-✅ `immich` en todas las líneas, igual en los otros tres.
+**Resultado:** `immich` en todas las líneas, igual en los otros tres.
 
 **Enseguida**, desde el PC, `http://<IP_SERVIDOR>:2283` → **Comenzar**: correo, contraseña (en el gestor) y nombre. El asistente, con lo que trae.
 
@@ -114,14 +114,14 @@ En la web, **Administración → Bibliotecas externas → Crear biblioteca**:
 
 En **Ajustes → Biblioteca externa**, el escaneo periódico (diario) viene activado y se deja así; la vigilancia `[EXPERIMENTAL]`, apagada.
 
-✅ **Colas de trabajo** con unos 2.200 recursos en marcha.
+**Resultado:** **Colas de trabajo** con unos 2.200 recursos en marcha.
 
 ### 4.5 App del iPhone
 
 1. **Servidor:** en casa, `http://<IP_SERVIDOR>:2283`, y entrar con la cuenta.
 2. **Ajustes de la app → Red → Cambio automático de URL:**
    - **Red local:** **Usar la conexión actual** (el nombre del wifi de casa y `http://<IP_SERVIDOR>:2283`). iOS pide la ubicación para leer el nombre del wifi: **Al usar la app** basta.
-   - **Red externa:** `http://<IP_TAILSCALE_SERVIDOR>:2283`. En casa sale con ❗ porque Tailscale está desconectado; es normal.
+   - **Red externa:** `http://<IP_TAILSCALE_SERVIDOR>:2283`. En casa sale con un signo de exclamación rojo porque Tailscale está desconectado; es normal.
 3. **Sin copia de seguridad automática:** las fotos se suben a mano (seleccionar → **Subir**).
 4. En la app de Tailscale, **VPN On Demand**: desconectar en el wifi de casa y conectar en el resto.
 

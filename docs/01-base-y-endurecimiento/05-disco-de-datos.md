@@ -50,7 +50,7 @@ sudo journalctl -k -b -1 | grep -ciE "uas|usb 2-1.*reset"
 ```bash
 sudo journalctl -k -b 0 | grep -E "uas_|usb 2-1:|sd 0:0:0:0|sda" | tail -15
 ```
-`usb 2-1` es el puerto del disco aquí: sale en `lsblk` y en el registro al detectarlo. ✅ Pocos avisos, y en el arranque actual solo la detección del disco. ❌ `reset`, `uas_eh_abort_handler` o `I/O error` repetidos.
+`usb 2-1` es el puerto del disco aquí: sale en `lsblk` y en el registro al detectarlo. **Bien:** pocos avisos, y en el arranque actual solo la detección del disco. **Mal:** `reset`, `uas_eh_abort_handler` o `I/O error` repetidos.
 
 Cuidado con filtrar solo por `uas`: también aparece en las listas de módulos que el núcleo imprime con cualquier aviso interno (ver Errores frecuentes).
 
@@ -76,7 +76,7 @@ El nombre de `/dev/disk/by-id/` incluye el modelo y el número de serie: no camb
 ```bash
 lsblk -o NAME,MODEL,SERIAL,SIZE,TRAN,MOUNTPOINTS "$D"
 ```
-✅ El modelo, el número de serie y el tamaño esperados, conexión `usb` y **sin punto de montaje**.
+**Resultado:** El modelo, el número de serie y el tamaño esperados, conexión `usb` y **sin punto de montaje**.
 
 ### 4.5 Formatear (borra el disco)
 
@@ -95,7 +95,7 @@ sudo udevadm settle
 ```bash
 sudo mkfs.btrfs -L datos "$D-part1"
 ```
-`mkfs.btrfs` está en `/usr/sbin`, que no está en la ruta de un usuario normal: sin `sudo` sale `command not found`. ✅ La salida dice `Label: datos`, `Data: single` y `Metadata: DUP`.
+`mkfs.btrfs` está en `/usr/sbin`, que no está en la ruta de un usuario normal: sin `sudo` sale `command not found`. **Resultado:** La salida dice `Label: datos`, `Data: single` y `Metadata: DUP`.
 
 ### 4.6 Subvolúmenes
 
@@ -117,7 +117,7 @@ sudo btrfs subvolume create /srv/datos/snapshots
 ```bash
 sudo btrfs subvolume list /srv/datos
 ```
-✅ Tres líneas: `path archivos`, `path fotos` y `path snapshots`.
+**Resultado:** Tres líneas: `path archivos`, `path fotos` y `path snapshots`.
 ```bash
 sudo umount /srv/datos
 ```
@@ -147,11 +147,11 @@ UUID=<UUID_DATOS> /srv/datos btrfs noatime,compress=zstd:1,nofail 0 0
 ```bash
 diff /etc/fstab.bak-AAAAMMDD /etc/fstab
 ```
-✅ Solo líneas con `>` (añadidas).
+**Resultado:** Solo líneas con `>` (añadidas).
 ```bash
 sudo findmnt --verify
 ```
-✅ `0 parse errors, 0 errors`. El aviso de que systemd usa la versión antigua desaparece con el comando siguiente.
+**Resultado:** `0 parse errors, 0 errors`. El aviso de que systemd usa la versión antigua desaparece con el comando siguiente.
 ```bash
 sudo systemctl daemon-reload
 ```
@@ -165,15 +165,15 @@ Sin `sudo`:
 ```bash
 findmnt /srv/datos
 ```
-✅ `btrfs` con `noatime,compress=zstd:1,ssd,discard=async,space_cache=v2,subvolid=5`. El núcleo detecta solo el SSD y activa el TRIM asíncrono.
+**Resultado:** `btrfs` con `noatime,compress=zstd:1,ssd,discard=async,space_cache=v2,subvolid=5`. El núcleo detecta solo el SSD y activa el TRIM asíncrono.
 ```bash
 btrfs filesystem df /srv/datos
 ```
-✅ `Data, single`, `System, DUP` y `Metadata, DUP`.
+**Resultado:** `Data, single`, `System, DUP` y `Metadata, DUP`.
 ```bash
 systemctl show srv-datos.mount -p WantedBy -p Before
 ```
-✅ `WantedBy=local-fs.target` y **sin** `local-fs.target` en `Before`: el arranque no espera al disco.
+**Resultado:** `WantedBy=local-fs.target` y **sin** `local-fs.target` en `Before`: el arranque no espera al disco.
 
 Con `sudo`:
 ```bash
@@ -191,7 +191,7 @@ sudo rm /srv/datos/archivos/prueba.txt
 ```bash
 sudo btrfs device stats /srv/datos
 ```
-✅ Los cinco contadores a `0`.
+**Resultado:** Los cinco contadores a `0`.
 
 ## 5. Verificación
 

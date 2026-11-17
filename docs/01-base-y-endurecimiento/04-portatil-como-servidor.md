@@ -59,7 +59,7 @@ No hace falta reiniciar nada: systemd lee este archivo en cada intento de suspen
 ```bash
 busctl call org.freedesktop.login1 /org/freedesktop/login1 org.freedesktop.login1.Manager CanSuspend
 ```
-✅ `s "no"`. Lo mismo con `CanHibernate`, `CanHybridSleep` y `CanSuspendThenHibernate`. **No** se prueba con `systemctl suspend`: si la configuración fallase, el equipo se dormiría y se perdería el acceso remoto.
+**Resultado:** `s "no"`. Lo mismo con `CanHibernate`, `CanHybridSleep` y `CanSuspendThenHibernate`. **No** se prueba con `systemctl suspend`: si la configuración fallase, el equipo se dormiría y se perdería el acceso remoto.
 
 ### 4.2 Que la tapa no haga nada
 
@@ -92,7 +92,7 @@ sudo systemctl reload systemd-logind
 ```bash
 busctl get-property org.freedesktop.login1 /org/freedesktop/login1 org.freedesktop.login1.Manager HandleLidSwitch
 ```
-✅ `s "ignore"`. Igual con `HandleLidSwitchExternalPower` y `HandleLidSwitchDocked`.
+**Resultado:** `s "ignore"`. Igual con `HandleLidSwitchExternalPower` y `HandleLidSwitchDocked`.
 
 ### 4.3 Apagado limpio con la batería al 10 %
 
@@ -120,7 +120,7 @@ sudo sed -i 's/^CriticalPowerAction=HybridSleep$/CriticalPowerAction=PowerOff/' 
 ```bash
 diff /etc/UPower/UPower.conf.bak-AAAAMMDD /etc/UPower/UPower.conf
 ```
-✅ Exactamente cuatro cambios, con los valores nuevos.
+**Resultado:** Exactamente cuatro cambios, con los valores nuevos.
 ```bash
 sudo systemctl restart upower
 ```
@@ -129,7 +129,7 @@ sudo systemctl restart upower
 ```bash
 upower -d | grep critical-action
 ```
-✅ `critical-action: PowerOff`.
+**Resultado:** `critical-action: PowerOff`.
 
 ### 4.4 BIOS: límite de carga y encendido tras un corte
 
