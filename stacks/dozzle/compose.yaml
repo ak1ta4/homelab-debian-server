@@ -1,0 +1,58 @@
+# Homelab: Dozzle, detrás de un proxy del socket de Docker de solo lectura.
+# Los valores de este equipo, en .env.
+services:
+  proxy:
+    image: tecnativa/docker-socket-proxy:lts@sha256:be1ac64f33bd82043beb504822a17ba6b71668ea1ad7cf51a9a01d27bb7ab047
+    container_name: dozzle_proxy
+    environment:
+      CONTAINERS: 1
+      INFO: 1
+      EVENTS: 1
+      POST: 0  # solo GET y HEAD: no puede crear, parar ni borrar nada
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - interna
+    restart: unless-stopped
+
+  dozzle:
+    image: amir20/dozzle:v11.4.3@sha256:244f218c876d6ed766277e71a537f34bfb2c01829e1927737e3673a8327deeb8
+    container_name: dozzle
+    user: "${DOZZLE_UID}:${DOZZLE_GID}"
+    environment:
+      DOZZLE_REMOTE_HOST: tcp://dozzle_proxy:2375
+      DOZZLE_AUTH_PROVIDER: simple
+      DOZZLE_AUTH_TTL: 48h
+      DOZZLE_ENABLE_ACTIONS: "false"
+      DOZZLE_ENABLE_SHELL: "false"
+      DOZZLE_NO_ANALYTICS: "true"
+    ports:
+      # Todas las IPv4; el origen se limita en DOCKER-USER.
+      - "0.0.0.0:8080:8080/tcp"
+    volumes:
+      - ./datos:/data
+    healthcheck:
+      test: ["CMD", "/dozzle", "healthcheck"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    depends_on:
+      - proxy
+    networks:
+      - default
+      - interna
+      - panel
+    restart: unless-stopped
+
+networks:
+  interna:
+    internal: true  # sin salida: solo Dozzle y el proxy
+  panel:
+    external: true  # la crea fase-5-red-panel.sh
