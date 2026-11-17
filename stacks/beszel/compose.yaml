@@ -1,0 +1,30 @@
+# Homelab: Beszel (hub). Los valores de este equipo, en .env.
+services:
+  beszel:
+    image: henrygd/beszel:0.21.2@sha256:b0be90bd4aee2993fde763032a5098ce4386fba43cfe5031ec017b8d9e8c97a2
+    container_name: beszel
+    user: "${BESZEL_UID}:${BESZEL_GID}"
+    ports:
+      # Todas las IPv4; el origen se limita en DOCKER-USER.
+      - "0.0.0.0:8090:8090/tcp"
+    volumes:
+      - ./datos:/beszel_data
+    tmpfs:
+      - /tmp  # la imagen no trae /tmp y no corre como root
+    healthcheck:
+      test: ["CMD", "/beszel", "health", "--url", "http://localhost:8090"]
+      interval: 120s
+      timeout: 5s
+      start_period: 10s
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - default
+      - panel
+    restart: unless-stopped
+
+networks:
+  panel:
+    external: true  # la crea fase-5-red-panel.sh

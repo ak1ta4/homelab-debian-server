@@ -1,0 +1,12 @@
+# Copia como /etc/beszel-agent.conf, de beszel y con permisos 600 (lleva el token).
+# KEY y TOKEN salen de la web de Beszel, en "Añadir sistema".
+KEY=<CLAVE_PUBLICA_BESZEL>
+TOKEN=<TOKEN_BESZEL>
+HUB_URL=http://127.0.0.1:8090
+# Sin servidor SSH: solo se conecta al hub por WebSocket.
+DISABLE_SSH=true
+# Sin Docker: el usuario beszel no está en el grupo docker.
+DOCKER_HOST=
+# Solo la AMD integrada: consultar la NVIDIA la despertaría.
+GPU_COLLECTOR=amd_sysfs
+EXTRA_FILESYSTEMS=/srv/datos__Datos
