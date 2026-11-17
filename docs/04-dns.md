@@ -209,6 +209,31 @@ tailscale debug prefs | grep -E '"CorpDNS"|"NoSNAT"'
 ```
 **Resultado:** `"CorpDNS": false` y `"NoSNAT": true`. `/etc/resolv.conf`, sin cambios.
 
+### 4.8 Filtros de amenazas
+
+Añadido en la [Fase 5, paso 1](05-servicios/README.md) (2026-11-17), a petición del dueño: un "firewall por nombres" contra webs de phishing, malware y estafas.
+
+1. Memoria de AdGuard antes (en Dozzle, o `sudo docker stats --no-stream adguard`). Aquí, 92 MB.
+2. **Filtros → Listas de bloqueo DNS → Añadir lista → Elegir de la lista**, del catálogo de AdGuard:
+
+   | Lista | Qué bloquea | Dominios (HaGeZi, 2026-11) |
+   |---|---|---|
+   | *HaGeZi's Threat Intelligence Feeds* | Malware, phishing, estafas y criptominado | 1,46 millones |
+   | *HaGeZi's Pro Blocklist* | Anuncios y rastreo, más fuerte que la *AdGuard DNS filter* | 242.000 |
+   | *HaGeZi's Encrypted DNS/VPN/TOR/Proxy Bypass* | Los DNS cifrados públicos, para que navegadores y apps no se salten AdGuard | 16.700 |
+
+   Se queda también la *AdGuard DNS filter*.
+3. **Ajustes → Configuración general → Registro de consultas:** rotación de 7 días.
+4. **Filtros → Reglas de filtrado personalizadas → Comprobar el filtrado:** `dns.google` (**sin punto al final**). **Resultado:** bloqueado.
+5. Memoria después: 427 MB.
+
+**Descartado:**
+- Las listas de dominios recién registrados: HaGeZi avisa de falsos positivos y de mucha memoria.
+- La **Navegación segura** de AdGuard: su documentación no explica qué datos envía a AdGuard.
+- Cortar los puertos 53 y 853 hacia fuera en el router, que haría el bloqueo de DNS cifrados completo: es tocar el router, y no se pidió.
+
+Si algo deja de funcionar: **Registro de consultas** → el dominio bloqueado → **Desbloquear**. Crea una excepción `@@||dominio^`. La lista de DNS cifrados es la que más puede romper: VPN comerciales y alguna app.
+
 ## 5. Verificación
 
 - [x] `nslookup ad.doubleclick.net <IP_SERVIDOR>` da `0.0.0.0` y `debian.org` resuelve (desde el PC).
@@ -219,6 +244,7 @@ tailscale debug prefs | grep -E '"CorpDNS"|"NoSNAT"'
 - [x] La red de casa no tiene IPv6 global (solo `fe80::`), así que nadie se salta AdGuard por un DNS IPv6 del router.
 - [x] iPhone con datos y Tailscale: las consultas llegan a AdGuard con su IP `100.x` y se bloquean dominios.
 - [x] Jellyfin sigue funcionando desde el iPhone por Tailscale tras `--snat-subnet-routes=false`.
+- [x] Filtros de amenazas: las tres listas cargadas, `dns.google` bloqueado y las webs de siempre abren (Fase 5).
 - [ ] Tras un reinicio: las reglas vuelven y AdGuard arranca. En la sesión en persona.
 
 ## 6. Errores frecuentes
@@ -233,6 +259,8 @@ tailscale debug prefs | grep -E '"CorpDNS"|"NoSNAT"'
 | Algún anuncio se cuela | El dispositivo usó el DNS de respaldo, o el anuncio sale del mismo dominio que el contenido | Esperado con el respaldo (ADR 0010) |
 | Safari en el iPhone no pasa por AdGuard | *Relay privado de iCloud* resuelve por su cuenta | Esperado; se puede desactivar en el iPhone |
 | Las consultas de la tailnet salen como `172.19.0.1` | NAT de Tailscale al reenviar al contenedor | `tailscale set --snat-subnet-routes=false` (4.7) |
+| "Comprobar el filtrado" dice que no está en las listas, y sí está | El nombre se escribió con un punto al final (`dns.google.`) | Sin el punto |
+| Una web o app deja de funcionar tras añadir las listas | Falso positivo | **Registro de consultas → Desbloquear** (4.8) |
 
 ## 7. Cómo revertirlo
 

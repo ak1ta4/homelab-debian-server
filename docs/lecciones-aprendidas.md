@@ -168,3 +168,29 @@ Errores reales, con su causa y su solución. Se escribe mientras se trabaja, no 
 
 - `google-authenticator -W` aparece en el manual como "desactivar la ventana de códigos", pero en modo TOTP el código fuente escribe `WINDOW_SIZE 3`: la ventana estándar (código anterior, actual y siguiente).
 - **Lección:** ante una duda de seguridad, leer el código o comprobar el archivo resultante (`grep '^"' ~/.google_authenticator`).
+
+## Un paquete oficial que daba root a su usuario
+
+- **Contexto:** el agente de Beszel se iba a instalar con su `.deb` oficial.
+- **Lo que se vio al inspeccionarlo** (`dpkg-deb -e`, sin instalar): el `postinst` crea el usuario `beszel` y, si existe el grupo `docker`, lo mete en él. Estar en `docker` equivale a ser root.
+- **Solución:** el binario del mismo release, comprobado con el `checksums.txt`, y un servicio propio con `User=beszel` y sin capacidades.
+- **Lección:** antes de instalar un paquete de fuera de Debian, leer sus scripts de mantenimiento.
+
+## Windows se quedó con el DNS de respaldo
+
+- **Síntoma:** tras recrear AdGuard, el navegador del PC daba "Server not found" con `homelab.home.arpa`, pero abría por la IP.
+- **Causa:** mientras AdGuard estuvo parado, Windows pasó al DNS secundario que reparte el router (uno público) y se quedó con él un rato. El público no conoce `home.arpa`.
+- **Solución:** desactivar y activar la red del PC, o esperar unos 15 minutos. `nslookup homelab.home.arpa` dice a qué servidor se está preguntando.
+- **Lección:** cada reinicio de AdGuard deja la casa unos minutos sin filtrado. Reiniciarlo lo menos posible, y el último.
+
+## Un script que creaba cosas antes de preguntar
+
+- **Síntoma:** al repetir mal la contraseña, el script de Dozzle terminó, pero ya había creado `/srv/dozzle`. Al volver a ejecutarlo, se negaba porque la carpeta existía.
+- **Solución:** pedir los datos al usuario **antes** de crear nada, y borrar lo creado si algo falla (`trap … ERR`).
+
+## La tecla AltGr atascada
+
+- **Síntoma:** en el escritorio del servidor, "hola" salía como `ħøłæ` y no funcionaban los atajos de GNOME, como cambiar de escritorio. Parecía un cambio de idioma.
+- **Lo que no era:** la distribución seguía en `es` y no había teclas especiales de accesibilidad activas. Se comprobó con `gsettings` por SSH (con `DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/<UID>/bus`).
+- **Causa:** AltGr (Alt derecha) estaba pulsada para GNOME: con ella, `h` da `ħ`, `o` da `ø`, `l` da `ł` y `a` da `æ`.
+- **Solución:** pulsar y soltar AltGr. Si el atasco es del teclado virtual de Sunshine, reiniciar su servicio de usuario lo suelta.

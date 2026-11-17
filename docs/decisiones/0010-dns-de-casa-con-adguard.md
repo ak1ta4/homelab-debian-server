@@ -39,3 +39,8 @@ El dueño quiere bloquear anuncios y rastreo en todos los dispositivos, en casa 
 - Con el respaldo, el filtrado en casa no es completo. Si molesta, se puede quitar el secundario del router (a cambio de depender del servidor).
 - La red de casa no tiene IPv6 global. Si el operador la activa, hay que revisar que el router no anuncie su propio DNS por IPv6.
 - Si el servidor cambia de IP, la casa pierde el DNS principal: depende de la reserva DHCP.
+- **Actualización (2026-11-17):**
+  - AdGuard responde además el nombre `homelab.home.arpa`, con una IP para la casa y otra para la tailnet ([ADR 0013](0013-panel-con-homepage.md)).
+  - Se añaden las listas de HaGeZi contra amenazas (TIF), la Pro y la de DNS cifrados, y el registro de consultas pasa a 7 días ([Fase 4, 4.8](../04-dns.md#48-filtros-de-amenazas)). La memoria de AdGuard pasa de 92 a 427 MB.
+  - Hay un segundo usuario de AdGuard, `panel`, para los datos del panel.
+  - Windows se queda un rato con el DNS de respaldo cuando AdGuard se reinicia: durante ese tiempo no hay filtrado ni `homelab.home.arpa`.

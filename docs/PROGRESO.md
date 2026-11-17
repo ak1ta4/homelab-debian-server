@@ -183,23 +183,28 @@ Guía: [`05-servicios/`](05-servicios/README.md). Plan aprobado por el dueño:
 - **5.3** Nube, **adelantada por el dueño**: Syncthing del PC al servidor, y Samba para el iPhone y el iPad. File Browser se descarta: está archivado desde el 2026-09-01.
 - **5.4** Traer archivos del PC (Wake-on-LAN). **5.5** Obsidian (necesita HTTPS). **5.6** Immich, después de la nube. **5.7** Descargas con ClamAV. **5.8** Auditoría: logwatch, rkhunter y AIDE.
 
-### 5.1 Panel con Homepage (2026-11-17)
+### 5.1 Monitorización y panel (hecho, 2026-11-17)
 
-Guía: [`05-servicios/01-panel.md`](05-servicios/01-panel.md). Decisión: [ADR 0013](decisiones/0013-panel-con-homepage.md).
+Guías: [`01-panel.md`](05-servicios/01-panel.md), [`01-monitorizacion.md`](05-servicios/01-monitorizacion.md) y [Fase 4, 4.8](04-dns.md#48-filtros-de-amenazas). Decisiones: [ADR 0013](decisiones/0013-panel-con-homepage.md) y [ADR 0014](decisiones/0014-beszel-y-dozzle.md).
 
-- Homepage `v2.8.0` en Docker ([stack](../stacks/homepage/README.md)): usuario `homepage`, `cap_drop: ALL`, sin socket de Docker y el disco de datos en `:ro`.
-- Nombre `homelab.home.arpa` en AdGuard: una reescritura con `$client` para `<RED_LAN>` y otra para la tailnet.
-- `homelab-homepage-lan.service`: el 80 desde `<RED_LAN>` y la tailnet. `"tcp:80"` y `"tcp:8384"` (panel de Syncthing) en la política de Tailscale.
-- Estilo gruvbox (`custom.css`), iconos en los grupos, marcadores y el tiempo con Open-Meteo.
-- En el servidor, `HOMEPAGE_ALLOWED_HOSTS` está escrito en `compose.yaml`; en el repositorio va en `.env`. Se iguala en la próxima actualización.
+- **Panel:** Homepage `v2.8.0` ([stack](../stacks/homepage/README.md)): usuario `homepage`, `cap_drop: ALL`, sin socket de Docker y el disco de datos en `:ro`. Estilo gruvbox, marcadores y el tiempo.
+  - Nombre `homelab.home.arpa` en AdGuard, con una reescritura con `$client` para `<RED_LAN>` y otra para la tailnet. En el servidor, una línea en `/etc/hosts` hacia `127.0.0.1`.
+  - Red de Docker `panel`, solo con las webs: puntos de estado de seis servicios.
+  - Datos de Immich (clave con solo `server.statistics`), Jellyfin (clave de administrador) y AdGuard (usuario `panel` con contraseña aleatoria). Claves en archivos `400`, leídas con `HOMEPAGE_FILE_*`. Syncthing sin datos: su clave da control total.
+- **Beszel `0.21.2`** ([stack](../stacks/beszel/README.md)): hub sin root; agente como servicio con el usuario `beszel`, sin el grupo `docker` (el `.deb` oficial lo añadía), sin puertos y solo con la GPU AMD.
+- **Dozzle `v11.4.3`** ([stack](../stacks/dozzle/README.md)): con contraseña, sin acciones ni consola, detrás de un proxy del socket con `POST=0` en una red interna.
+- **AdGuard:** listas de HaGeZi (amenazas, Pro y DNS cifrados) y registro de 7 días. Memoria de 92 a 427 MB.
+- `DOCKER-USER`: 80, 8090 y 8080 desde `<RED_LAN>` y la tailnet. En la política: `"tcp:80"`, `"tcp:8384"`, `"tcp:8090"` y `"tcp:8080"`.
 - **Comprobado:**
-  - `nslookup` desde el PC: una sola IP, la de casa.
-  - Contenedor `healthy`, con el usuario `homepage`; portada `200`.
-  - El dueño lo usa desde el PC.
-  - Desde el iPhone con datos y Tailscale, el panel y sus enlaces abren. Al principio no cargaba: faltaba `"tcp:80"` en la política.
+  - El nombre da una sola IP desde el PC; el panel abre en el PC, en el servidor y en el iPhone con datos. Al principio no cargaba fuera: faltaba `"tcp:80"`.
+  - Seis puntos verdes y datos en las tres tarjetas.
+  - Hub como `beszel-hub`; agente como `beszel`, sin puertos; sistema en verde.
+  - El proxy de Dozzle responde `403` a un `POST`; Dozzle ve los 11 contenedores.
+  - `dns.google` bloqueado; las webs de siempre abren.
 - Pendiente:
+  - Beszel y Dozzle desde el iPhone fuera de casa.
   - La prueba de reinicio.
-  - Beszel, Dozzle, los datos de cada servicio en las tarjetas y los filtros de AdGuard.
+  - Alertas de Beszel a Telegram (paso 5.2).
 
 ### 5.3 Nube (hecho, 2026-11-16 y 2026-11-17)
 

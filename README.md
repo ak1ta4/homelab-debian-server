@@ -11,6 +11,8 @@
 ![Samba 4.22.11](https://img.shields.io/badge/Samba-4.22.11-555555)
 ![Immich v3.4.1](https://img.shields.io/badge/Immich-v3.4.1-4250AF?logo=immich&logoColor=white)
 ![Homepage v2.8.0](https://img.shields.io/badge/Homepage-v2.8.0-FE8019)
+![Beszel 0.21.2](https://img.shields.io/badge/Beszel-0.21.2-0EA5E9)
+![Dozzle v11.4.3](https://img.shields.io/badge/Dozzle-v11.4.3-F59E0B)
 
 ![Expuesto a internet: nada](https://img.shields.io/badge/expuesto%20a%20internet-nada-2E7D32)
 ![Secretos: gitleaks 8.30.1](https://img.shields.io/badge/secretos-gitleaks%208.30.1-2E7D32)

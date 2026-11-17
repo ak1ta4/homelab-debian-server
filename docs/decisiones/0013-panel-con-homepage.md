@@ -39,6 +39,6 @@ Con cinco servicios, cada uno en su IP y su puerto, hace falta una página de in
 - **Comprobado:** el nombre da una sola IP en el PC; el contenedor corre como `homepage`; el dueño lo ve y usa desde el PC, y desde el iPhone fuera de casa por la tailnet.
 - Para abrir desde fuera el panel de Syncthing, la política también lleva `"tcp:8384"`.
 - Sin contraseña: lo ve cualquiera de la LAN o de la tailnet. Solo hay enlaces y uso de recursos.
-- Los datos de cada servicio en las tarjetas necesitan claves de API: se guardarán en `.env`, fuera de Git, con los permisos mínimos.
+- **Actualización (2026-11-17):** puntos de estado y datos de Immich, Jellyfin y AdGuard por una red de Docker, `panel`, que solo une las webs. Las claves, en archivos `400` fuera de Git (`HOMEPAGE_FILE_*`). Las de Jellyfin y AdGuard son de administrador; la de Syncthing no se usa, porque da control total.
 - Al actualizar Homepage, revisar `custom.css` si cambian las variables de color.
 - El servidor no resuelve `homelab.home.arpa` (no usa AdGuard): sus scripts siguen usando IP.
