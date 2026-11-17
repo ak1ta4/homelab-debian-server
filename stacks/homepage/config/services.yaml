@@ -1,0 +1,28 @@
+# Homelab: servicios. Los enlaces usan homelab.home.arpa (AdGuard).
+- Multimedia:
+    - Jellyfin:
+        icon: jellyfin.png
+        href: http://homelab.home.arpa:8096
+        description: Películas y series
+    - Immich:
+        icon: immich.png
+        href: http://homelab.home.arpa:2283
+        description: Fotos
+- Archivos:
+    - Syncthing:
+        icon: syncthing.png
+        href: https://homelab.home.arpa:8384
+        description: Copia del PC (panel solo desde el PC y la tailnet)
+    - Carpeta de red:
+        icon: mdi-folder-network-outline
+        href: smb://homelab.home.arpa/pc
+        description: "pc (lectura) y subidas, con Samba"
+- Red:
+    - AdGuard Home:
+        icon: adguard-home.png
+        href: http://homelab.home.arpa:3000
+        description: DNS sin anuncios (panel solo desde casa)
+    - Tailscale:
+        icon: si-tailscale-#ebdbb2
+        href: https://login.tailscale.com/admin/machines
+        description: Acceso desde fuera

@@ -1,0 +1,14 @@
+# Homelab: marcadores.
+- Enlaces:
+    - GitHub:
+        - icon: mdi-github-#ebdbb2
+          href: https://github.com/
+          description: Repositorios
+    - Repositorio homelab:
+        - icon: mdi-source-repository
+          href: https://github.com/<USUARIO_GITHUB>/homelab-debian-server
+          description: Esta documentación
+    - Claude:
+        - icon: mdi-robot-outline
+          href: https://claude.ai/
+          description: El asistente

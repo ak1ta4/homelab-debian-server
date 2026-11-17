@@ -1,0 +1,28 @@
+/* Homelab: paleta gruvbox (oscuro) sobre el tema "stone".
+   Las variables son tripletes RGB, como en theme.css de Homepage. */
+html.theme-stone {
+  --color-50: 251 241 199;   /* fg0  #fbf1c7 */
+  --color-100: 235 219 178;  /* fg1  #ebdbb2 */
+  --color-200: 213 196 161;  /* fg2  #d5c4a1 */
+  --color-300: 189 174 147;  /* fg3  #bdae93 */
+  --color-400: 168 153 132;  /* fg4  #a89984 */
+  --color-500: 146 131 116;  /* gris #928374 */
+  --color-600: 102 92 84;    /* bg3  #665c54 */
+  --color-700: 80 73 69;     /* bg2  #504945 */
+  --color-800: 40 40 40;     /* bg0  #282828 (fondo) */
+  --color-900: 29 32 33;     /* bg0h #1d2021 */
+
+  /* Degradado de los iconos mdi: naranja a amarillo. */
+  --color-logo-start: 254 128 25;  /* #fe8019 */
+  --color-logo-stop: 250 189 47;   /* #fabd2f */
+}
+
+/* Un brillo naranja muy suave arriba del todo. */
+html.dark #__next {
+  background-image: radial-gradient(
+    ellipse 80% 40% at 50% 0%,
+    rgb(254 128 25 / 0.07),
+    transparent 70%
+  );
+  background-attachment: fixed;
+}

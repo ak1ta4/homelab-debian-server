@@ -1,0 +1,26 @@
+# Homelab: ajustes de Homepage (paleta gruvbox en custom.css).
+title: homelab
+language: es
+theme: dark
+color: stone  # sus variables se sustituyen en custom.css
+headerStyle: boxedWidgets
+hideVersion: true
+useEqualHeights: true
+target: _blank
+layout:
+  Multimedia:
+    style: row
+    columns: 2
+    icon: mdi-play-box-multiple-outline
+  Archivos:
+    style: row
+    columns: 2
+    icon: mdi-folder-sync-outline
+  Red:
+    style: row
+    columns: 2
+    icon: mdi-lan
+  Enlaces:
+    style: row
+    columns: 3
+    icon: mdi-bookmark-outline
