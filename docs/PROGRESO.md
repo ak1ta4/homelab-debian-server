@@ -183,6 +183,24 @@ Guía: [`05-servicios/`](05-servicios/README.md). Plan aprobado por el dueño:
 - **5.3** Nube, **adelantada por el dueño**: Syncthing del PC al servidor, y Samba para el iPhone y el iPad. File Browser se descarta: está archivado desde el 2026-09-01.
 - **5.4** Traer archivos del PC (Wake-on-LAN). **5.5** Obsidian (necesita HTTPS). **5.6** Immich, después de la nube. **5.7** Descargas con ClamAV. **5.8** Auditoría: logwatch, rkhunter y AIDE.
 
+### 5.1 Panel con Homepage (2026-11-17)
+
+Guía: [`05-servicios/01-panel.md`](05-servicios/01-panel.md). Decisión: [ADR 0013](decisiones/0013-panel-con-homepage.md).
+
+- Homepage `v2.8.0` en Docker ([stack](../stacks/homepage/README.md)): usuario `homepage`, `cap_drop: ALL`, sin socket de Docker y el disco de datos en `:ro`.
+- Nombre `homelab.home.arpa` en AdGuard: una reescritura con `$client` para `<RED_LAN>` y otra para la tailnet.
+- `homelab-homepage-lan.service`: el 80 desde `<RED_LAN>` y la tailnet. `"tcp:80"` y `"tcp:8384"` (panel de Syncthing) en la política de Tailscale.
+- Estilo gruvbox (`custom.css`), iconos en los grupos, marcadores y el tiempo con Open-Meteo.
+- En el servidor, `HOMEPAGE_ALLOWED_HOSTS` está escrito en `compose.yaml`; en el repositorio va en `.env`. Se iguala en la próxima actualización.
+- **Comprobado:**
+  - `nslookup` desde el PC: una sola IP, la de casa.
+  - Contenedor `healthy`, con el usuario `homepage`; portada `200`.
+  - El dueño lo usa desde el PC.
+  - Desde el iPhone con datos y Tailscale, el panel y sus enlaces abren. Al principio no cargaba: faltaba `"tcp:80"` en la política.
+- Pendiente:
+  - La prueba de reinicio.
+  - Beszel, Dozzle, los datos de cada servicio en las tarjetas y los filtros de AdGuard.
+
 ### 5.3 Nube (hecho, 2026-11-16 y 2026-11-17)
 
 Guía: [`05-servicios/03-nube.md`](05-servicios/03-nube.md). Decisión: [ADR 0011](decisiones/0011-nube-con-syncthing-y-samba.md).
@@ -224,6 +242,7 @@ Guía: [`05-servicios/06-fotos.md`](05-servicios/06-fotos.md). Decisión: [ADR 0
   - La biblioteca está escaneada.
   - App en casa sin VPN y fuera por la tailnet.
 - Primer procesado de la IA: carga de 12 a 26 con 12 hilos (a la 01:48 del 2026-11-17). El dueño lo deja con la concurrencia por defecto.
+- A las 02:43, lo que más cargaba era `ffmpeg` (cerca del 970 % de CPU), convirtiendo los vídeos HEVC del iPhone. A las 15:39, carga de 0,1: el procesado ha terminado (las colas, sin mirar).
 - Pendiente:
   - Que terminen los trabajos.
   - La prueba de reinicio.

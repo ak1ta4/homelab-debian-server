@@ -22,6 +22,7 @@ Las guías nunca muestran valores reales. Usan estos marcadores; los valores de 
 | `<UUID_DATOS>` | UUID del sistema de archivos btrfs del disco de datos (`lsblk -o NAME,UUID`) |
 | `<IP_TAILSCALE_SERVIDOR>` | IP del servidor en la tailnet (`100.x.y.z`) |
 | `<DOMINIO>` | Dominio propio (aplazado) |
+| `<CIUDAD>`, `<LATITUD>`, `<LONGITUD>` | Pueblo del servidor y sus coordenadas con dos decimales (las del pueblo, no las de la casa), para el tiempo del panel |
 | `<DNS_OPERADOR>` | Los dos DNS del operador, separados por coma, tal como los repartía el router |
 | `<RED_LAN_REGEX>`, `<IP_PUBLICA_REGEX>`, `<OTROS_NOMBRES>` | Valores reales escritos como expresión regular, solo en la configuración local de gitleaks |
 | `AAAAMMDD` | Fecha del día en las copias de seguridad, por ejemplo `20261108` |

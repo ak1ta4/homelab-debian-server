@@ -77,6 +77,8 @@ ExecStart=/usr/sbin/iptables -I DOCKER-USER -p tcp -m conntrack --ctstate DNAT -
 ```
 Lleva también un `ExecStop=-… -D DOCKER-USER …` por cada regla y `WantedBy=docker.service` en `[Install]`.
 
+Para abrir el panel desde fuera de casa por la tailnet, hace falta también `"tcp:8384"` en la política de Tailscale. Se añadió el 2026-11-17, con el [panel de inicio](01-panel.md). El 22000 no está en la política: el PC llama al servidor desde casa.
+
 ```bash
 sudo systemctl daemon-reload
 ```

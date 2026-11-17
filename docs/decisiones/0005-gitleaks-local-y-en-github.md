@@ -15,7 +15,7 @@ El repositorio debe poder hacerse público algún día sin exponer nada. Por eso
 | **Hooks propios con configuración de root en `/etc/homelab`** | Ni el agente ni un parche pueden debilitarla; puede contener los valores reales de la casa | Las reglas de datos de la casa no viajan a GitHub |
 | `gitleaks-action` en GitHub | Oficial | En la primera subida revisa desde un commit inexistente y no revisa nada; código bajo licencia comercial (gratis para cuentas personales) |
 | **Workflow propio** con el binario oficial fijado por checksum | Misma versión que en local; revisa todo el historial; falla si no revisó nada | Hay que actualizar la versión a mano |
-| GitGuardian (app de GitHub) | Avisos automáticos | Un tercero lee el repositorio privado |
+| GitGuardian (app de GitHub) | Avisos automáticos | Un tercero lee el repositorio, entonces privado |
 
 ## Decisión
 
@@ -28,3 +28,4 @@ El repositorio debe poder hacerse público algún día sin exponer nada. Por eso
 - Tres barreras locales y una remota. La remota solo conoce las reglas genéricas de secretos.
 - gitleaks se actualiza a mano, en el servidor y en el workflow: va en el calendario. El proyecto está en modo de solo arreglos de seguridad; se vigilará su sucesor.
 - Ninguna herramienta lo detecta todo: la revisión humana de cada parche sigue siendo obligatoria.
+- **Actualización (2026-11-17):** el dueño hizo público el repositorio. Es el caso para el que se pensó esta decisión: no cambia nada, pero cada parche se publica en cuanto se sube.

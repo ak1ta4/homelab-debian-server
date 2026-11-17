@@ -47,7 +47,7 @@ En el panel de Tailscale, **Access controls** → **JSON editor**, sustituyendo 
 ```
 Sin la regla por defecto, que lo permite todo, los dispositivos personales no se ven entre ellos; solo llegan al servidor.
 
-En la [Fase 4](04-dns.md#47-tailscale-adguard-también-fuera-de-casa) se añaden `"udp:53", "tcp:53"` a la lista `ip`, para el DNS. En la [Fase 5](05-servicios/03-nube.md#44-samba), `"tcp:445"`, para Samba, y `"tcp:2283"`, para [Immich](05-servicios/06-fotos.md).
+En la [Fase 4](04-dns.md#47-tailscale-adguard-también-fuera-de-casa) se añaden `"udp:53", "tcp:53"` a la lista `ip`, para el DNS. En la [Fase 5](05-servicios/03-nube.md#44-samba), `"tcp:445"`, para Samba, `"tcp:2283"`, para [Immich](05-servicios/06-fotos.md), `"tcp:80"`, para el [panel](05-servicios/01-panel.md), y `"tcp:8384"`, para el panel de Syncthing.
 
 ### 4.2 Instalar en el servidor
 

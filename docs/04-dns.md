@@ -146,6 +146,8 @@ nslookup ad.doubleclick.net <IP_SERVIDOR>
 ```
 **Resultado:** `0.0.0.0`. Y `nslookup debian.org <IP_SERVIDOR>` da su IP real.
 
+En la Fase 5, las **reglas de filtrado personalizadas** añaden el nombre `homelab.home.arpa`, con una IP para la casa y otra para la tailnet ([panel, 4.1](05-servicios/01-panel.md#41-el-nombre-homelabhomearpa)).
+
 ### 4.5 El servidor no usa AdGuard
 
 El servidor sigue con los DNS del operador, aunque el router reparta AdGuard:

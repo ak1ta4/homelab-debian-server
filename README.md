@@ -10,6 +10,7 @@
 ![Syncthing 2.1.7](https://img.shields.io/badge/Syncthing-2.1.7-0891D1?logo=syncthing&logoColor=white)
 ![Samba 4.22.11](https://img.shields.io/badge/Samba-4.22.11-555555)
 ![Immich v3.4.1](https://img.shields.io/badge/Immich-v3.4.1-4250AF?logo=immich&logoColor=white)
+![Homepage v2.8.0](https://img.shields.io/badge/Homepage-v2.8.0-FE8019)
 
 ![Expuesto a internet: nada](https://img.shields.io/badge/expuesto%20a%20internet-nada-2E7D32)
 ![Secretos: gitleaks 8.30.1](https://img.shields.io/badge/secretos-gitleaks%208.30.1-2E7D32)

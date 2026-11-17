@@ -16,6 +16,7 @@ Cada decisión importante tiene un documento corto con su **contexto**, las **op
 | [0010](0010-dns-de-casa-con-adguard.md) | DNS de casa y de la tailnet con AdGuard, con respaldo público en casa | Aceptada |
 | [0011](0011-nube-con-syncthing-y-samba.md) | Nube con Syncthing del PC al servidor y Samba (espejo de solo lectura) | Aceptada |
 | [0012](0012-fotos-con-immich.md) | Fotos con Immich sin root, IA en CPU y las fotos del PC en solo lectura | Aceptada |
+| [0013](0013-panel-con-homepage.md) | Panel con Homepage sin socket de Docker y nombre `homelab.home.arpa` en AdGuard | Aceptada |
 
 **Pendientes, en su fase:**
 - Conexión directa, Peer Relay o DERP.
@@ -25,5 +26,4 @@ Cada decisión importante tiene un documento corto con su **contexto**, las **op
 - NVIDIA solo para cómputo.
 - `rest-server` en modo `append-only`.
 - Moshi con Mosh frente a SSH con tmux.
-- Homepage frente a Homarr.
 - Beszel y Dozzle frente a Grafana o Netdata.
