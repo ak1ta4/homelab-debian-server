@@ -151,6 +151,19 @@ Errores reales, con su causa y su solución. Se escribe mientras se trabaja, no 
 - **Causa:** Windows prueba primero el usuario con el que inició sesión. Después, si hay una conexión con otras credenciales, da el error 1219.
 - **Solución:** `net use \\<IP_SERVIDOR>\pc /user:homelab\<usuario> *` (el `*` pide la contraseña sin mostrarla), y `net use * /delete /y` para cerrar las anteriores.
 
+## La IP de la tailnet solo existe con Tailscale encendido
+
+- **Síntoma:** la app de Immich decía "Server is not reachable" en casa, con `http://<IP_TAILSCALE_SERVIDOR>:2283`.
+- **Causa:** la dirección `100.x` la da Tailscale. Con Tailscale apagado, el iPhone no sabe llegar a ella aunque esté en la misma red que el servidor. En casa, el servidor es `<IP_SERVIDOR>`.
+- **Solución:** cambio automático de URL en la app (wifi de casa → `<IP_SERVIDOR>`; fuera → tailnet) y VPN On Demand en Tailscale. iOS pide la ubicación para leer el nombre del wifi: con **Al usar la app** basta.
+- **Lección:** una dirección es de una red concreta. Para cada servicio, dejar claro qué dirección se usa en casa y cuál fuera.
+
+## Docker no da al contenedor los grupos secundarios del usuario
+
+- **Contexto:** Immich tenía que leer las imágenes del PC, que son del grupo `syncthing`. Con `user: immich`, el proceso no tiene ese grupo, aunque el usuario esté en él en el host.
+- **Solución:** `group_add` con el GID de `syncthing` en el servicio, y el montaje `:ro`. Probado antes con `sudo -u immich -g syncthing touch …` (debe fallar).
+- **Otro detalle:** `docker top <contenedor> -o user` falla con `Couldn't find PID field`; necesita `-o pid,user`.
+
 ## El manual de una opción decía lo contrario de lo que hace
 
 - `google-authenticator -W` aparece en el manual como "desactivar la ventana de códigos", pero en modo TOTP el código fuente escribe `WINDOW_SIZE 3`: la ventana estándar (código anterior, actual y siguiente).
