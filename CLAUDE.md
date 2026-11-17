@@ -20,6 +20,7 @@ Responde y pregunta **siempre en español**. Este archivo es público dentro del
 - El agente trabaja en su clon, en ramas, y entrega parches. `<USUARIO_ADMIN>` los revisa, los aplica en `/opt/homelab` con `git am` y los sube. El agente no tiene credenciales de GitHub.
 - gitleaks bloquea secretos y datos de la casa en cada commit, parche y subida. No lo desactives ni uses `gitleaks:allow`.
 - Commits pequeños, en español, con Conventional Commits.
+- Sin emojis en el repositorio: "**Resultado:**" para lo que debe salir. Al cambiar una versión, actualiza también su insignia en el `README.md`.
 
 ## Decisiones que no se reabren sin que las pida el dueño
 - Sin cifrado de disco ni reinstalación de Debian: riesgo físico aceptado.

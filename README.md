@@ -1,5 +1,20 @@
 # Homelab en un portátil con Debian
 
+![Debian 13.7](https://img.shields.io/badge/Debian-13.7-A81D33?logo=debian&logoColor=white)
+![Docker Engine 29.9.3](https://img.shields.io/badge/Docker%20Engine-29.9.3-2496ED?logo=docker&logoColor=white)
+![Compose 5.7.1](https://img.shields.io/badge/Compose-5.7.1-2496ED?logo=docker&logoColor=white)
+![Tailscale 1.104.7](https://img.shields.io/badge/Tailscale-1.104.7-242424?logo=tailscale&logoColor=white)
+
+![AdGuard Home v0.107.80](https://img.shields.io/badge/AdGuard%20Home-v0.107.80-68BC71?logo=adguard&logoColor=white)
+![Jellyfin 12.4](https://img.shields.io/badge/Jellyfin-12.4-00A4DC?logo=jellyfin&logoColor=white)
+![Syncthing 2.1.7](https://img.shields.io/badge/Syncthing-2.1.7-0891D1?logo=syncthing&logoColor=white)
+![Samba 4.22.11](https://img.shields.io/badge/Samba-4.22.11-555555)
+![Immich v3.4.1](https://img.shields.io/badge/Immich-v3.4.1-4250AF?logo=immich&logoColor=white)
+
+![Expuesto a internet: nada](https://img.shields.io/badge/expuesto%20a%20internet-nada-2E7D32)
+![Secretos: gitleaks 8.30.1](https://img.shields.io/badge/secretos-gitleaks%208.30.1-2E7D32)
+![Fase 5 en curso](https://img.shields.io/badge/fase-5%20en%20curso-F0A30A)
+
 Servidor doméstico privado montado sobre un portátil con Debian 13 y GNOME: sincronización de archivos, notas de Obsidian, fotos, DNS con filtrado para toda la casa y acceso remoto seguro. Todo funciona con Docker y **nada se expone a internet**: se accede desde la red de casa o desde una tailnet.
 
 El repositorio documenta **lo que se hizo de verdad**, paso a paso. Así se puede reconstruir a mano, un principiante puede seguirlo y se entiende el porqué de cada decisión.
