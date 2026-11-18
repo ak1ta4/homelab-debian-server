@@ -420,6 +420,72 @@ tmux attach -t homelab
 | Fail2ban bloqueó un equipo mío | `sudo fail2ban-client set sshd unbanip <IP>` desde el PC o el escritorio remoto |
 | Un cambio rompió el SSH | Escritorio remoto o físico: restaura las copias del apartado 4.9 (sección 7) |
 
+### 4.13 Un usuario para el widget de ServerCat
+
+Añadido el 2026-11-18, a petición del dueño: ver el estado del servidor en un widget del iPhone con ServerCat. Decisión: [ADR 0015](../decisiones/0015-usuario-servercat.md).
+
+ServerCat lee `/proc` por SSH, sin instalar nada y sin root. Se conecta cada pocos segundos con la app abierta, así que no puede pedir un código TOTP. Por eso tiene **un usuario propio, `servercat`**, que entra **solo con clave y solo desde `<RED_LAN>` y la tailnet**. Nada cambia para `<USUARIO_ADMIN>`.
+
+**En el iPhone:** ServerCat → **Servers → Keychain → Generate ED25519 key**. Ponle nombre (por ejemplo, `homelab`): **sin nombre, no se puede elegir después**. Al tocarla se ve su clave pública. **No uses "Copy SSH key to server"**: da un comando que autoriza la clave en la cuenta con la que lo ejecutes, que sería la de administrador.
+
+**En el servidor** (con otra sesión de `<USUARIO_ADMIN>` abierta). Guarda la clave pública en `~/servercat.pub` (una línea, `ssh-ed25519 AAAA…`) y crea el usuario:
+```bash
+sudo adduser --disabled-password --comment "" servercat
+```
+```bash
+sudo usermod -aG sshusers servercat
+```
+```bash
+sudo chmod 700 /home/servercat
+```
+```bash
+sudo install -d -o servercat -g servercat -m 700 /home/servercat/.ssh
+```
+La clave, con `restrict` (sin terminal, túneles ni reenvíos) y `from=` (solo desde casa y la tailnet):
+```bash
+printf 'restrict,from="<RED_LAN>,100.64.0.0/10" %s\n' "$(cat ~/servercat.pub)" | sudo tee /home/servercat/.ssh/authorized_keys
+```
+```bash
+sudo chown servercat:servercat /home/servercat/.ssh/authorized_keys
+```
+```bash
+sudo chmod 600 /home/servercat/.ssh/authorized_keys
+```
+Guarda la configuración efectiva de tu usuario, para compararla después:
+```bash
+sudo sshd -T -C user=<USUARIO_ADMIN>,addr=<IP_PC>,host=pc,laddr=<IP_SERVIDOR>,lport=22 | sort > /tmp/antes.txt
+```
+`/etc/ssh/sshd_config.d/12-homelab-servercat.conf`:
+```
+# Homelab: ServerCat (widget del iPhone). Solo clave, sin TOTP, y solo
+# desde la LAN y la tailnet. Nada más cambia para nadie.
+Match User servercat Address <RED_LAN>,100.64.0.0/10
+    AuthenticationMethods publickey
+    PermitTTY no
+```
+```bash
+sudo sshd -t
+```
+```bash
+sudo sshd -T -C user=<USUARIO_ADMIN>,addr=<IP_PC>,host=pc,laddr=<IP_SERVIDOR>,lport=22 | sort | diff /tmp/antes.txt -
+```
+**Resultado:** nada: tu configuración no cambia. Vuelta atrás automática en 10 minutos y recarga, que no corta las sesiones abiertas:
+```bash
+sudo systemd-run --unit=servercat-rollback --on-active=10min /bin/sh -c "rm -f /etc/ssh/sshd_config.d/12-homelab-servercat.conf && systemctl reload ssh"
+```
+```bash
+sudo systemctl reload ssh
+```
+En otra ventana, entra como `<USUARIO_ADMIN>` (clave y código). En ServerCat:
+- **Host:** `<IP_SERVIDOR>`, puerto 22, **User** `servercat`, sin contraseña.
+- **SSH Key:** la clave por su nombre, **no *Auto***. Con *Auto*, el botón de prueba funciona, pero la pestaña *Status* no ofrece ninguna clave ("No available authentication methods"), y Fail2ban bloquea el iPhone en medio minuto.
+
+Si la pestaña *Status* muestra datos y tu entrada funciona:
+```bash
+sudo systemctl stop servercat-rollback.timer
+```
+El widget, en la pantalla de inicio del iPhone: **Editar → Añadir widget → ServerCat**. iOS lo actualiza cada 20 o 30 minutos.
+
 ## 5. Verificación
 
 - [x] `sshd -T` muestra `permitrootlogin no`, `passwordauthentication no`, `allowgroups sshusers` y `authenticationmethods publickey,keyboard-interactive`.
@@ -429,6 +495,8 @@ tmux attach -t homelab
 - [x] Fail2ban bloquea otro equipo solo en el puerto 22, lo desbloquea y nunca bloquea el PC.
 - [x] Desde internet no llega: el router no reenvía el 22 al servidor ([auditoría, 4.9](../00-auditoria.md#49-hallazgo-el-router-tenía-su-propio-ssh-abierto-a-internet)).
 - [ ] Limitar el 22 a la LAN con el firewall: paso 7.
+- [x] `servercat` (4.13): `sshd -T` da `authenticationmethods publickey` desde casa y `publickey,keyboard-interactive` desde fuera; la configuración de `<USUARIO_ADMIN>`, idéntica. ServerCat muestra los datos en casa (2026-11-18).
+- [ ] ServerCat fuera de casa, por la tailnet.
 
 ## 6. Errores frecuentes
 
@@ -442,6 +510,9 @@ tmux attach -t homelab
 | Tras desbloquear un equipo, vuelve a estar bloqueado | Con `mode = aggressive` y un usuario inexistente, **un solo** intento genera varios fallos y llega a 5 | Comprueba el desbloqueo en el servidor con `nft list set`, no reintentando |
 | La app del móvil dice "connection could not be established" | Puede ser un bloqueo de Fail2ban (rechazo con `port-unreachable`) | Mira `fail2ban-client status sshd` antes de suponer otra causa |
 | `sudo sshd -t` da un error | Directiva mal escrita | **No** recargues: corrige y valida otra vez. Mientras no recargues, sigue la configuración anterior |
+| ServerCat: el test conecta, pero *Status* no carga y en sus *Logs* pone "No available authentication methods" | **SSH Key** en *Auto* | Elegir la clave por su nombre; ponérselo en el Keychain si no tiene. Cerrar la app y desbloquear el iPhone |
+| En el registro, conexiones del iPhone cada 5 segundos como `<USUARIO_ADMIN>` | El servidor de ServerCat se quedó con tu usuario | Cambiar **User** a `servercat` en la app; cerrarla del todo antes de desbloquear |
+| Tras "Copy SSH key to server", la clave del iPhone sale en tu `authorized_keys` | Ese botón da un comando que autoriza la clave en la cuenta que lo ejecuta | Quitar esa línea de tu `~/.ssh/authorized_keys` (con copia) y comprobar con `ssh-keygen -lf` |
 
 ## 7. Cómo revertirlo
 
@@ -459,6 +530,17 @@ sudo cp -a 10-homelab.conf.bak-AAAAMMDD sshd_config.d/10-homelab.conf
 ```
 ```bash
 sudo sshd -t && sudo systemctl reload ssh
+```
+
+**Quitar el usuario de ServerCat** (4.13):
+```bash
+sudo rm /etc/ssh/sshd_config.d/12-homelab-servercat.conf
+```
+```bash
+sudo sshd -t && sudo systemctl reload ssh
+```
+```bash
+sudo deluser --remove-home servercat
 ```
 
 **Quitar Fail2ban:**
@@ -493,6 +575,7 @@ sudo groupdel sshusers
 - La exclusión de Fail2ban depende de la IP del PC, que se puede suplantar en la LAN. Solo evita bloqueos: no da acceso.
 - Algoritmos de cifrado y `/etc/ssh/moduli` sin restringir todavía: se harán en el paso 9, tras comprobar que el PC, el iPad y el iPhone siguen pudiendo conectar. OpenSSH 10 ya prefiere por defecto intercambios de claves modernos.
 - El TOTP no protege si el PC está comprometido **mientras** hay una sesión abierta.
+- **`servercat` entra sin TOTP** (4.13): quien tenga el iPhone desbloqueado y esté en casa o en la tailnet puede entrar como `servercat`. Sin `sudo`, sin Docker y sin terminal, pero con los comandos que permita un usuario normal: leer lo que es legible para todos.
 
 ## 9. Para la entrevista
 

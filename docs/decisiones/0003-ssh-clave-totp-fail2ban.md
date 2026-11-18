@@ -32,3 +32,4 @@ El único acceso remoto era el escritorio remoto (Moonlight), frágil ante fallo
 - Hasta el paso 7 (firewall), el 22 es alcanzable desde toda la LAN.
 - Algoritmos y `moduli` sin restringir: se harán en el paso 9, tras comprobar la compatibilidad con los clientes (Windows, iPad, iPhone).
 - El usuario del agente no entra en `sshusers`. Si necesita SSH en la Fase 7, será con un bloque `Match` explícito y solo por la tailnet.
+- **Actualización (2026-11-18):** primera excepción al TOTP, el usuario `servercat` para el widget del iPhone: solo clave y solo desde casa y la tailnet ([ADR 0015](0015-usuario-servercat.md)).

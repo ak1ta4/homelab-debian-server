@@ -18,6 +18,7 @@ Cada decisión importante tiene un documento corto con su **contexto**, las **op
 | [0012](0012-fotos-con-immich.md) | Fotos con Immich sin root, IA en CPU y las fotos del PC en solo lectura | Aceptada |
 | [0013](0013-panel-con-homepage.md) | Panel con Homepage sin socket de Docker y nombre `homelab.home.arpa` en AdGuard | Aceptada |
 | [0014](0014-beszel-y-dozzle.md) | Beszel con el agente fuera de Docker y Dozzle tras un proxy de solo lectura | Aceptada |
+| [0015](0015-usuario-servercat.md) | Usuario `servercat` sin TOTP, solo desde casa y la tailnet, para el widget del iPhone | Aceptada |
 
 **Pendientes, en su fase:**
 - Conexión directa, Peer Relay o DERP.

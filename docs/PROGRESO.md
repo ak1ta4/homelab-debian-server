@@ -206,6 +206,17 @@ Guías: [`01-panel.md`](05-servicios/01-panel.md), [`01-monitorizacion.md`](05-s
   - La prueba de reinicio.
   - Alertas de Beszel a Telegram (paso 5.2).
 
+### Widget de ServerCat en el iPhone (2026-11-18)
+
+Pedido por el dueño. Guía: [SSH, 4.13](01-base-y-endurecimiento/02-ssh-de-emergencia.md#413-un-usuario-para-el-widget-de-servercat). Decisión: [ADR 0015](decisiones/0015-usuario-servercat.md).
+
+- Usuario `servercat`, sin `sudo` ni `docker`. Entra solo con la clave de la app (`restrict`), sin TOTP y solo desde `<RED_LAN>` y la tailnet.
+- **Comprobado:** `sshd -T` da solo clave desde casa y clave + TOTP desde fuera; la configuración de `<USUARIO_ADMIN>`, idéntica. ServerCat muestra los datos en casa.
+- Por el camino:
+  - El botón "Copy SSH key to server" de la app autorizó su clave en la cuenta de administrador. Se quitó, con copia.
+  - Con **SSH Key** en *Auto*, la pestaña *Status* no ofrecía clave, y Fail2ban bloqueó el iPhone varias veces.
+- Pendiente: probarlo fuera de casa, con **Host** `homelab.home.arpa`.
+
 ### 5.3 Nube (hecho, 2026-11-16 y 2026-11-17)
 
 Guía: [`05-servicios/03-nube.md`](05-servicios/03-nube.md). Decisión: [ADR 0011](decisiones/0011-nube-con-syncthing-y-samba.md).

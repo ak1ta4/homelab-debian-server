@@ -31,5 +31,5 @@ Responde y pregunta **siempre en español**. Este archivo es público dentro del
 - No desinstales `gnome-online-accounts`: arrastraría `gdm3` y `gnome-shell`.
 - Sunshine: `capture = kms`, `encoder = vaapi`, `adapter_name = /dev/dri/renderD128`. No uses `capture = portal`.
 - No toques los drivers NVIDIA sin que se pida. Sin transformaciones de `xrandr` ni extensiones de GNOME sin preguntar.
-- SSH: solo `sshusers`, clave + TOTP. Antes de tocarlo, deja una sesión abierta, valida con `sshd -t` y prueba en otra ventana. Rescate en la guía del SSH.
+- SSH: solo `sshusers`, clave + TOTP. Única excepción: `servercat`, solo clave y solo desde la LAN y la tailnet (ADR 0015). Antes de tocarlo, deja una sesión abierta, valida con `sshd -t` y prueba en otra ventana. Rescate en la guía del SSH.
 - Fail2ban nunca bloquea `<IP_PC>`; si bloquea otro equipo, `fail2ban-client set sshd unbanip <IP>`.

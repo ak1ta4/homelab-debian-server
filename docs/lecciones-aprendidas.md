@@ -194,3 +194,18 @@ Errores reales, con su causa y su solución. Se escribe mientras se trabaja, no 
 - **Lo que no era:** la distribución seguía en `es` y no había teclas especiales de accesibilidad activas. Se comprobó con `gsettings` por SSH (con `DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/<UID>/bus`).
 - **Causa:** AltGr (Alt derecha) estaba pulsada para GNOME: con ella, `h` da `ħ`, `o` da `ø`, `l` da `ł` y `a` da `æ`.
 - **Solución:** pulsar y soltar AltGr. Si el atasco es del teclado virtual de Sunshine, reiniciar su servicio de usuario lo suelta.
+
+## Un botón de la app que autorizaba su clave en la cuenta de administrador
+
+- **Contexto:** ServerCat genera su clave y ofrece "Copy SSH key to server": un comando `echo '…' >> ~/.ssh/authorized_keys`.
+- **Lo que pasó:** se ejecutó como `<USUARIO_ADMIN>`, y la clave del iPhone quedó autorizada en la cuenta con `sudo`. El TOTP impidió que bastara para entrar, pero era la mitad del acceso de administrador.
+- **Solución:** quitar la línea (con copia), comprobar con `ssh-keygen -lf ~/.ssh/authorized_keys` y autorizar la clave en un usuario propio.
+- **Lección:** antes de ejecutar un comando que propone una app, mirar **en qué cuenta** lo vas a ejecutar.
+
+## ServerCat con la clave en "Auto" y Fail2ban
+
+- **Síntoma:** el botón de prueba de ServerCat conectaba, pero la pestaña *Status* no cargaba, y poco después el iPhone no conectaba de ninguna forma.
+- **Causa:** con **SSH Key** en *Auto*, la consulta de *Status* no ofrece ninguna clave ("No available authentication methods") y cierra la conexión, cada 5 segundos. Fail2ban, en modo *aggressive*, cuenta cada cierre como un fallo y bloquea el iPhone en medio minuto.
+- **Pista:** en el registro de `ssh` salía `Connection closed by authenticating user … [preauth]` sin ningún `Failed publickey`; y cuando ya estaba bloqueado, no salía nada.
+- **Solución:** ponerle nombre a la clave, elegirla en el servidor, **cerrar la app** y después desbloquear la IP.
+- **Lección:** al depurar una app que se reconecta sola, pararla antes de desbloquear; si no, vuelve a bloquearse antes de poder probar nada.

@@ -13,7 +13,7 @@ Las guías nunca muestran valores reales. Usan estos marcadores; los valores de 
 | `<RED_LAN_MASCARA>` | La misma red con la máscara escrita entera, `x.x.x.0/255.255.255.0`: es la forma que documenta `hosts allow` de Samba |
 | `<IP_SUMIDERO>` | IP de la LAN sin uso, fuera de los rangos DHCP. No se asigna nunca a ningún equipo |
 | `<IP_PUBLICA>` | IP pública de la conexión |
-| `<USUARIO_ADMIN>` | Cuenta administradora del servidor, la única en `sshusers` por ahora |
+| `<USUARIO_ADMIN>` | Cuenta administradora del servidor. En `sshusers` está también `servercat`, sin `sudo`, para el widget del iPhone |
 | `<USUARIO_GITHUB>` | Usuario de GitHub dueño del repositorio |
 | `<USUARIO_WINDOWS>` | Usuario de Windows en el PC. El usuario de Samba tiene el mismo nombre, pero otra contraseña |
 | `<IP_BLOQUEADA>` | IP que Fail2ban ha bloqueado, tal como sale en `fail2ban-client status sshd` |
